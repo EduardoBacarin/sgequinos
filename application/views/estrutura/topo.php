@@ -113,6 +113,12 @@
                   <p>Propriedades</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="<?=base_url('animal')?>" class="nav-link">
+                <i class="fa-solid fa-horse mr-2 ml-4"></i>
+                  <p>Animais</p>
+                </a>
+              </li>
             <?php } ?>
               <li class="nav-item">
                 <a href="<?=base_url('exame')?>" class="nav-link">

@@ -28,19 +28,21 @@
             </div>
           </div>
           <div class="row">
-            <table id="tabela-exames" style="width: 100%">
-              <thead>
-                <th>#</th>
-                <th>Nome</th>
-                <th>E-Mail</th>
-                <th>Telefone</th>
-                <th>Portaria de Credenciamento</th>
-                <th>Endereço</th>
-                <th>Cidade/Estado</th>
-              </thead>
-              <tbody>
-              </tbody>
-            </table>
+            <div class="col-md-12">
+              <table id="tabela-exames" style="width: 100%">
+                <thead>
+                  <th>#</th>
+                  <th>Nome</th>
+                  <th>E-Mail</th>
+                  <th>Telefone</th>
+                  <th>Portaria de Credenciamento</th>
+                  <th>Endereço</th>
+                  <th>Cidade/Estado</th>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
