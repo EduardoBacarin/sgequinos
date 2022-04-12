@@ -214,23 +214,31 @@
               <div class="row">
                 <div class="col-md-3">
                   <div class="form-group">
+                    <label for="select_animal">Selecione o Animal</label>
+                    <select class="form-control" id="select_animal" name="select_animal" disabled>
+                      <option value="0" selected>Selecione o proprietário primeiro</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
                     <label for="nome_ani">Nome do Animal</label>
                     <input type="text" class="form-control" id="nome_ani" name="nome_ani" placeholder="Nome do Animal">
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                   <div class="form-group">
                     <label for="registro_ani">Registro / Nº / Marca</label>
                     <input type="text" class="form-control" id="registro_ani" name="registro_ani" placeholder="Registro">
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                   <div class="form-group">
                     <label for="especie_ani">Espécie</label>
                     <input type="text" class="form-control" id="especie_ani" name="especie_ani" placeholder="Espécie">
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                   <div class="form-group">
                     <label for="raca_ani">Raça</label>
                     <input type="text" class="form-control" id="raca_ani" name="raca_ani" placeholder="Raça">
@@ -241,7 +249,10 @@
                 <div class="col-md-1">
                   <div class="form-group">
                     <label for="sexo_ani">Sexo</label>
-                    <input type="text" class="form-control" id="sexo_ani" name="sexo_ani" placeholder="Sexo">
+                    <select class="form-control" id="sexo_ani" name="sexo_ani">
+                        <option value="M" selected>M</option>
+                        <option value="F">F</option>
+                    </select>
                   </div>
                 </div>
                 <div class="col-md-2">

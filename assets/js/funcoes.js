@@ -1,0 +1,15 @@
+function sucesso(){
+    toastr.success(msg)
+}
+
+function info(msg){
+    toastr.info(msg)
+}
+
+function erro(msg){
+    toastr.error(msg)
+}
+
+function aviso(msg){
+    toastr.warning(msg)
+}

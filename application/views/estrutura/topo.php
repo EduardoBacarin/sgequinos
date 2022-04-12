@@ -10,6 +10,7 @@
   <script src="https://kit.fontawesome.com/f89139718b.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="<?= base_url('assets')?>/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <link rel="stylesheet" href="<?= base_url('assets')?>/plugins/formValidation/formValidation.min.css">
+  <link rel="stylesheet" href="<?= base_url('assets')?>/plugins/toastr/toastr.min.css">
   <link rel="stylesheet" href="<?= base_url('assets')?>/css/adminlte.min.css">
   <?php
 

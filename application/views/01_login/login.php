@@ -6,9 +6,11 @@
   <title>SVEquinos | Login</title>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <link rel="stylesheet" href="<?php echo base_url('assets')?>/plugins/fontawesome-free/css/all.min.css">
-  <link rel="stylesheet" href="<?php echo base_url('assets')?>/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-  <link rel="stylesheet" href="<?php echo base_url('assets')?>/css/adminlte.min.css">
+  <link rel="stylesheet" href="<?= base_url('assets')?>/plugins/toastr/toastr.min.css">
+  <link rel="stylesheet" href="<?= base_url('assets')?>/plugins/formValidation/formValidation.min.css">
+  <link rel="stylesheet" href="<?= base_url('assets')?>/plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="<?= base_url('assets')?>/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <link rel="stylesheet" href="<?= base_url('assets')?>/css/adminlte.min.css">
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
@@ -19,7 +21,7 @@
     <div class="card-body">
       <p class="login-box-msg">Cadastre-se para acessar nossos serviços</p>
 
-      <form action="<?php echo base_url('login/entrar') ?>" method="post">
+      <form id="FormLogin" method="post" novalidate="novalidate" enctype="multipart/form-data" class="form-group">
         <div class="input-group mb-3">
           <input type="email" class="form-control" placeholder="Email" name="email_user" id="email_user">
           <div class="input-group-append">
@@ -65,8 +67,16 @@
   </div>
 </div>
 
+</body>
+<input type="hidden" id="base_url" value="<?php echo base_url() ?>">
+
 <script src="<?php echo base_url('assets') ?>/plugins/jquery/jquery.min.js"></script>
 <script src="<?php echo base_url('assets') ?>/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="<?php echo base_url('assets') ?>/dist/js/adminlte.min.js"></script>
-</body>
+<script src="<?php echo base_url('assets') ?>/plugins/formValidation/formValidation.min.js"></script>
+<script src="<?php echo base_url('assets') ?>/plugins/formValidation/framework/bootstrap.min.js"></script>
+<script src="<?php echo base_url('assets') ?>/plugins/formValidation/language/pt_BR.min.js"></script>
+<script src="<?php echo base_url('assets') ?>/js/adminlte.min.js"></script>
+<script src="<?php echo base_url('assets') ?>/js/login.js"></script>
+<script src="<?php echo base_url('assets') ?>/js/funcoes.js"></script>
+<script src="<?= base_url('assets/plugins/toastr/toastr.min.js') ?>"></script>
 </html>

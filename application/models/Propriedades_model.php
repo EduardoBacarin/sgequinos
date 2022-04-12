@@ -18,8 +18,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Propriedades_model extends CI_Model {
 
-  public function insert_prop($dados) {
-		$this->db->insert("proprietario", $dados);
+  public function insert_propriedade($dados) {
+		$this->db->insert("propriedade", $dados);
 		//print_r($this->db->last_query());exit;
 		if ($this->db->insert_id() >= 1) {
 			return $this->db->insert_id();
@@ -28,11 +28,12 @@ class Propriedades_model extends CI_Model {
 		}
 	}
 
-	public function lista_proprietarios($codigo_vet){
+	public function lista_propriedades($codigo_vet){
 		$this->db->select("*");
-		$this->db->from("proprietario");
-		$this->db->where("ativo_prop", true);
-		$this->db->where("codigo_vet", $codigo_vet);
+		$this->db->from("propriedade");
+		$this->db->join("proprietario", "proprietario.codigo_prop = propriedade.codigo_prop", 'inner');
+		$this->db->where("propriedade.ativo_pro", true);
+		$this->db->where("propriedade.codigo_vet", $codigo_vet);
 		$query = $this->db->get();
 
 		// print_r($this->db->last_query());exit;
@@ -44,12 +45,12 @@ class Propriedades_model extends CI_Model {
 		}
 	}
 
-	public function busca_proprietario($codigo_prop, $codigo_vet){
+	public function busca_propriedade($codigo_pro, $codigo_vet){
 		$this->db->select("*");
-		$this->db->from("proprietario");
-		$this->db->where("codigo_prop", $codigo_prop);
+		$this->db->from("propriedade");
+		$this->db->where("codigo_pro", $codigo_pro);
 		$this->db->where("codigo_vet", $codigo_vet);
-		$this->db->where("ativo_prop", true);
+		$this->db->where("ativo_pro", true);
 		$this->db->limit(1);
 		$query = $this->db->get();
 

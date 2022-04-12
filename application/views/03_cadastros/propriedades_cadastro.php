@@ -23,83 +23,76 @@
           <div class="col-md-12">
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Dados do Proprietário</h3>
+                <h3 class="card-title">Dados da Propriedade</h3>
               </div>
-              <form id="formCadastroProprietario" novalidate="novalidate" enctype="multipart/form-data">
-                <input type="hidden" id="codigo_prop" name="codigo_prop" value="0">
+              <form id="formCadastroPropriedade" novalidate="novalidate" enctype="multipart/form-data">
+                <input type="hidden" id="codigo_pro" name="codigo_pro" value="0">
                 <div class="card-body">
                   <div class="row">
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label for="nome_prop">Nome Completo</label>
-                        <input type="text" class="form-control" id="nome_prop" name="nome_prop" placeholder="Nome Completo do Proprietário">
+                        <label for="select_proprietarios">Proprietário</label>
+                        <select class="form-control" id="select_proprietarios" name="select_proprietarios">
+                          <option value="0" selected>Selecione o Proprietário</option>
+                          <?php foreach ($proprietarios as $prop) { ?>
+                            <option value="<?= $prop->codigo_prop ?>"><?= $prop->nome_prop ?></option>
+                          <?php } ?>
+                        </select>
                       </div>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label for="datanascimento_prop">Data de Nascimento</label>
-                        <input type="date" class="form-control" id="datanascimento_prop" name="datanascimento_prop" placeholder="Data de Nascimento">
+                        <label for="nome_pro">Nome da Propriedade</label>
+                        <input type="text" class="form-control" id="nome_pro" name="nome_pro" placeholder="Nome da Propriedade">
                       </div>
                     </div>
-                    <div class="col-md-4">
+                  </div>
+                  <div class="row">
+                    <div class="col-md-2">
                       <div class="form-group">
-                        <label for="email_prop">E-Mail</label>
-                        <input type="text" class="form-control" id="email_prop" name="email_prop" placeholder="E-Mail">
-                      </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label for="telefone_prop">Telefone</label>
-                        <input type="text" class="form-control" id="telefone_prop" name="telefone_prop" placeholder="Telefone do Proprietário">
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label for="documento_prop">CPF/CNPJ</label>
-                        <input type="text" class="form-control" id="documento_prop" name="documento_prop" placeholder="CPF ou CNPJ">
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label for="cep_prop">CEP</label>
-                        <input type="text" class="form-control" id="cep_prop" name="cep_prop" placeholder="CEP do Proprietário">
-                      </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label for="endereco_prop">Endereço</label>
-                        <input type="text" class="form-control" id="endereco_prop" name="endereco_prop" placeholder="Endereço do Proprietário">
-                      </div>
-                    </div>
-                    <div class="col-md-1">
-                      <div class="form-group">
-                        <label for="numero_prop">Número</label>
-                        <input type="tel" class="form-control" id="numero_prop" name="numero_prop" placeholder="Número do Proprietário">
+                        <label for="qtdequinos_pro">Quantidade de Equinos</label>
+                        <input type="tel" class="form-control" id="qtdequinos_pro" name="qtdequinos_pro" placeholder="Quantidade de Equinos">
                       </div>
                     </div>
                     <div class="col-md-2">
                       <div class="form-group">
-                        <label for="numero_prop">Bairro</label>
-                        <input type="text" class="form-control" id="bairro_prop" name="bairro_prop" placeholder="Bairro do Proprietário">
+                        <label for="cep_pro">CEP da Propriedade (Se Existir)</label>
+                        <input type="text" class="form-control" id="cep_pro" name="cep_pro" placeholder="CEP da Propriedade">
                       </div>
                     </div>
                     <div class="col-md-3">
                       <div class="form-group">
-                        <label for="cidade_prop">Cidade</label>
-                        <input type="text" class="form-control" id="cidade_prop" name="cidade_prop" placeholder="Cidade do Proprietário">
+                        <label for="logradouro_pro">Logradouro</label>
+                        <input type="text" class="form-control" id="logradouro_pro" name="logradouro_pro" placeholder="Logradouro da Propriedade"  data-toggle="tooltip" data-placement="top" title='Dica: Se localizado em rodovia, colocar nome da rodovia e qual KM se localiza, por exemplo: "Rod. Julio Budisk, KM 34"'>
+                      </div>
+                    </div>
+                    <div class="col-md-1">
+                      <div class="form-group">
+                        <label for="numero_pro">Número</label>
+                        <input type="text" class="form-control" id="numero_pro" name="numero_pro" placeholder="Número">
                       </div>
                     </div>
                     <div class="col-md-2">
                       <div class="form-group">
-                        <label for="estadouf_prop">Estado(UF)</label>
-                        <input type="text" class="form-control" id="estadouf_prop" name="estadouf_prop" placeholder="Estado (UF) do Proprietário">
+                        <label for="cidade_pro">Cidade</label>
+                        <input type="text" class="form-control" id="cidade_pro" name="cidade_pro" placeholder="Cidade">
                       </div>
                     </div>
-                </div>
+                    <div class="col-md-2">
+                      <div class="form-group">
+                        <label for="estadouf_pro">Estado(UF)</label>
+                        <input type="text" class="form-control" id="estadouf_pro" name="estadouf_pro" placeholder="Estado(UF)">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="observacao_pro">Observações</label>
+                        <textarea class="form-control" name="observacao_pro" placeholder="Observações sobre a propriedade" rows="6" maxlength="1000"></textarea>
+                      </div>
+                    </div>
+                  </div>
                 <div class="card-footer">
                   <button type="submit" class="btn btn-primary">Submit</button>
                 </div>

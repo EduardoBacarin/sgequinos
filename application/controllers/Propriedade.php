@@ -20,7 +20,6 @@ class Propriedade extends CI_Controller{
   }
 
   public function index(){
-    $this->load->model('proprietarios_model');
     $this->load->model('propriedades_model');
     $topo['css_link'] = array(
       '//cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css'
@@ -29,7 +28,7 @@ class Propriedade extends CI_Controller{
     $rodape['js'] = array(
         'assets/js/propriedades.js' . V,
     );
-    $data['proprietarios'] = $this->proprietarios_model->lista_proprietarios($this->session->userdata('usuario')['codigo_user']);
+    $data['propriedades'] = $this->propriedades_model->lista_propriedades($this->session->userdata('usuario')['codigo_user']);
 
     $this->load->view('estrutura/topo', $topo);
     $this->load->view('04_listas/propriedades_lista', $data);
@@ -37,6 +36,8 @@ class Propriedade extends CI_Controller{
   }
 
   public function cadastro_propriedade(){
+    $this->load->model('proprietarios_model');
+    $data['proprietarios'] = $this->proprietarios_model->lista_proprietarios($this->session->userdata('usuario')['codigo_user']);
 
     $topo['css_link'] = array(
       '//cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css'
@@ -46,11 +47,11 @@ class Propriedade extends CI_Controller{
         'assets/js/propriedades_cadastro.js' . V,
     );
     $this->load->view('estrutura/topo', $topo);
-    $this->load->view('03_cadastros/propriedades_cadastro');
+    $this->load->view('03_cadastros/propriedades_cadastro', $data);
     $this->load->view('estrutura/rodape', $rodape);
   }
 
-  public function salvar_proprietario(){
+  public function salvar_propriedade(){
     $this->load->model('proprietarios_model');
     $this->load->model('propriedades_model');
 
@@ -58,11 +59,20 @@ class Propriedade extends CI_Controller{
 
     if (!empty($post)){
       $dados = [
-        'codigo_vet'            => $this->session->userdata('usuario')['codigo_user'],
+        'codigo_vet'         => $this->session->userdata('usuario')['codigo_user'],
+        'codigo_prop'        => $post['select_proprietarios'],
+        'nome_pro'           => $post['nome_pro'],
+        'qtdequinos_pro'     => $post['qtdequinos_pro'],
+        'cep_pro'            => $post['cep_pro'],
+        'logradouro_pro'     => $post['logradouro_pro'],
+        'numero_pro'         => $post['numero_pro'],
+        'cidade_pro'         => $post['cidade_pro'],
+        'estadouf_pro'       => $post['estadouf_pro'],
+        'observacao_pro'     => $post['observacao_pro'],
       ];
       $inserePropriedade = $this->propriedades_model->insert_propriedade($dados);
       if ($inserePropriedade){
-        echo json_encode(array('retorno' => true, 'msg' => 'Propriedades cadastrado com sucesso!'));
+        echo json_encode(array('retorno' => true, 'msg' => 'Propriedade cadastrado com sucesso!'));
       }else{
         echo json_encode(array('retorno' => false, 'msg' => 'Erro no cadastramento do propriedade'));
       }

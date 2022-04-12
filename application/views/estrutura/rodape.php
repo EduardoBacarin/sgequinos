@@ -20,6 +20,8 @@
 <script src="<?= base_url('assets')?>/js/adminlte.min.js"></script>
 <script src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="<?= base_url('assets/plugins/formValidation/formValidation.min.js') ?>"></script>
+<script src="<?= base_url('assets/plugins/toastr/toastr.min.js') ?>"></script>
+<script src="<?= base_url('assets/js/funcoes.js') ?>"></script>
 <script src="<?= base_url('assets/plugins/formValidation/framework/bootstrap.min.js') ?>"></script>
 
 <?php

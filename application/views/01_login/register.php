@@ -184,9 +184,9 @@
 <script src="<?php echo base_url('assets') ?>/plugins/jquery/jquery.min.js"></script>
 <script src="<?php echo base_url('assets') ?>/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="<?php echo base_url('assets') ?>/plugins/formValidation/formValidation.min.js"></script>
-<script src="<?= base_url('assets/plugins/formValidation/framework/bootstrap.min.js') ?>"></script>
-<script src="<?= base_url('assets/plugins/formValidation/language/pt_BR.min.js') ?>"></script>
+<script src="<?php echo base_url('assets') ?>/plugins/formValidation/framework/bootstrap.min.js"></script>
+<script src="<?php echo base_url('assets') ?>/plugins/formValidation/language/pt_BR.min.js"></script>
 <script src="<?php echo base_url('assets') ?>/js/adminlte.min.js"></script>
-<script src="<?php echo base_url('assets') ?>/js/login.js"></script>
+<script src="<?php echo base_url('assets') ?>/js/register.js"></script>
 </body>
 </html>

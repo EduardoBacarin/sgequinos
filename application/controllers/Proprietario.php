@@ -91,4 +91,16 @@ class Proprietario extends CI_Controller{
     }
   }
 
+  public function busca_animais_prop(){
+    $this->load->model('proprietarios_model');
+    $codigo_prop = $this->input->post('codigo_prop');
+
+    $data = $this->proprietarios_model->busca_animais_prop($codigo_prop, $this->session->userdata('usuario')['codigo_user']);
+    if(!empty($data)){
+      echo json_encode(array('retorno' => true, 'dados' => $data));
+    }else{
+      echo json_encode(array('retorno' => false, 'msg' => 'Dados do Proprietário não encontrados'));
+    }
+  }
+
 }

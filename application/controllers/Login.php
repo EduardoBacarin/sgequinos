@@ -25,6 +25,10 @@ class Login extends CI_Controller{
   public function entrar(){
     $this->load->model('veterinarios_model');
     $this->load->model('laboratorios_model');
+    if(!isset($_SESSION)) 
+    { 
+        session_start(); 
+    } 
     $post = $this->input->post();
     $senha = hash_hmac('sha256', $post['senha_user'], KEY);
     $email = $post['email_user'];
@@ -34,7 +38,6 @@ class Login extends CI_Controller{
       $busca = $this->veterinarios_model->busca_login($email, $senha);
       // echo json_encode($busca);exit;
       if (!empty($busca)){
-        session_start();
         $sessao = [
           'codigo_user'      => $busca[0]->codigo_vet,
           'tipo_user'        => $post['tipo_usuario'],
@@ -43,7 +46,7 @@ class Login extends CI_Controller{
         ];
 
         $this->session->set_userdata('usuario', $sessao);
-        redirect('dashboard');
+        echo json_encode(array('retorno' => true, 'redirect' => '/dashboard'));
       }else{
         echo json_encode(array('retorno' => false, 'msg' => 'Usuário ou senha inválidos!'));
       }
@@ -51,7 +54,6 @@ class Login extends CI_Controller{
       $busca = $this->laboratorios_model->busca_login($email, $senha);
       // echo json_encode($busca);exit;
       if (!empty($busca)){
-        session_start();
         $sessao = [
           'codigo_user'      => $busca[0]->codigo_lab,
           'tipo_user'        => $post['tipo_usuario'],
@@ -61,7 +63,7 @@ class Login extends CI_Controller{
         ];
 
         $this->session->set_userdata('usuario', $sessao);
-        redirect('dashboard');
+        echo json_encode(array('retorno' => true, 'redirect' => '/dashboard'));
       }else{
         echo json_encode(array('retorno' => false, 'msg' => 'Usuário ou senha inválidos!'));
       }
@@ -76,6 +78,10 @@ class Login extends CI_Controller{
   public function registrar_usuario(){
     $this->load->model('veterinarios_model');
     $this->load->model('laboratorios_model');
+    if(!isset($_SESSION)) 
+    { 
+        session_start(); 
+    } 
     $post = $this->input->post();
     $senha = hash_hmac('sha256', $post['senha_user'], KEY);
     $senharedigitada = hash_hmac('sha256', $post['redigitasenha_user'], KEY);
@@ -93,7 +99,6 @@ class Login extends CI_Controller{
           $insereVet = $this->veterinarios_model->insert_vet($dados_usuario);
 
           if ($insereVet){
-            session_start();
             $sessao = [
               'codigo_user'      => $insereVet,
               'tipo_user'        => $post['tipo_user'],
@@ -122,7 +127,6 @@ class Login extends CI_Controller{
           $insereLab = $this->laboratorios_model->insert_lab($dados_usuario);
           
           if ($insereLab){
-            session_start();
             $sessao = [
               'codigo_user'      => $insereLab,
               'tipo_user'        => $post['tipo_user'],

@@ -61,4 +61,20 @@ class Proprietarios_model extends CI_Model {
 			return false;
 		}
 	}
+
+	public function busca_animais_prop($codigo_prop, $codigo_vet){
+		$this->db->select("*");
+		$this->db->from("animal");
+		$this->db->where("codigo_prop", $codigo_prop);
+		$this->db->where("ativo_ani", true);
+		$query = $this->db->get();
+
+		// print_r($this->db->last_query());exit;
+		
+		if ($query->num_rows() >= 1) {
+			return $query->result();
+		} else {
+			return false;
+		}
+	}
 }

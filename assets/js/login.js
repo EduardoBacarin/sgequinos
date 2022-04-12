@@ -1,33 +1,8 @@
 var base_url = $("#base_url").val();
-
+var avisos   = "Obrigatório."
 $(document).ready(function () {
 
-  $('input[name="tipo_usuario"]').on('click', function(){
-    var valor = $(this).val();
-    if (valor == 1){
-      $('#dados_laboratorio').hide();
-    }else if(valor == 2){
-      $('#dados_laboratorio').show();
-    }
-  });
-
-  $('#cep_user').on('blur', function(){
-    var cep = $(this).val();
-    $('#rua_user').val('...');
-    $('#bairro_user').val('...');
-    $('#cidade_user').val('...');
-    $('#estadouf_user').val('...');
-
-    $.getJSON( "https://ms.mook.com.br/cep/" + cep, function( data ) {
-        $('#rua_user').val(data.logradouro);
-        $('#bairro_user').val(data.bairro);
-        $('#cidade_user').val(data.cidade);
-        $('#estadouf_user').val(data.estado);
-        $('#numero_user').focus();
-      });
-    });
-
-  $('#FormCadastroUsuario').formValidation({
+  $('#FormLogin').formValidation({
     framework: 'bootstrap',
     excluded: [':disabled', ':hidden', ':not(:visible)'],
     icon: {
@@ -36,10 +11,23 @@ $(document).ready(function () {
         validating: 'glyphicon glyphicon-refresh'
     },
     fields: {
-
+      email_user: {
+        validators: {
+            notEmpty: {
+                message: avisos
+            }
+        }
+      },
+      senha_user: {
+        validators: {
+            notEmpty: {
+                message: avisos
+            }
+        }
+      }
     }
-})
-.on('success.form.fv', function (e) {
+  })
+  .on('success.form.fv', function (e) {
     e.preventDefault();
 
     var $form = $(e.target),
@@ -52,7 +40,7 @@ $(document).ready(function () {
     });
 
     $.ajax({
-        url: base_url + 'login/registrar_usuario',
+        url: base_url + 'login/entrar',
         type: 'POST',
         data: formData,
         dataType: 'json',
@@ -60,12 +48,12 @@ $(document).ready(function () {
         contentType: false,
         processData: false,
         success: function (data) {
-            if (data.retorno) {
-
-            } else {
-  
+            if (data.retorno == false) {
+              erro('Usuário ou Senha Inválida');
+            }else{
+              window.location.href = 'http://localhost/sgequinos' + data.redirect;
             }
         }
     });
-});
+  });
 });
