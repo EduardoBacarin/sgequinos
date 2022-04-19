@@ -19,7 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Exames_model extends CI_Model {
 
   	public function insert_exame($dados) {
-		$this->db->insert("exames", $dados);
+		$this->db->insert("exame", $dados);
 		//print_r($this->db->last_query());exit;
 		if ($this->db->insert_id() >= 1) {
 			return $this->db->insert_id();

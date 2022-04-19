@@ -44,13 +44,15 @@
                   foreach ($propriedades as $pro){ 
                   $contador++
                   ?>
-                    <td><?= $contador ?></td>
-                    <td><?=$pro->nome_pro?></td>
-                    <td><?=$pro->nome_prop?></td>
-                    <td><?=$pro->qtdequinos_pro?></td>
-                    <td><?=$pro->logradouro_pro . ', ' . $pro->numero_pro?></td>
-                    <td><?=$pro->cidade_pro . ' - ' . $pro->estadouf_pro?></td>
-                  <?php } ?>
+                    <tr>
+                      <td><?= $contador ?></td>
+                      <td><?=$pro->nome_pro?></td>
+                      <td><?=$pro->nome_prop?></td>
+                      <td><?=$pro->qtdequinos_pro?></td>
+                      <td><?=$pro->logradouro_pro . ', ' . $pro->numero_pro?></td>
+                      <td><?=$pro->cidade_pro . ' - ' . $pro->estadouf_pro?></td>
+                    <?php } ?>
+                  </tr>
                 </tbody>
               </table>
             </div>

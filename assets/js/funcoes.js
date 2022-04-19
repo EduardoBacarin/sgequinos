@@ -1,4 +1,4 @@
-function sucesso(){
+function sucesso(msg){
     toastr.success(msg)
 }
 

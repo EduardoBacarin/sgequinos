@@ -8,8 +8,9 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- <link rel="stylesheet" href="<?= base_url('assets')?>/plugins/fontawesome-free/css/all.min.css"> -->
   <script src="https://kit.fontawesome.com/f89139718b.js" crossorigin="anonymous"></script>
+  <script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.4.0/fabric.min.js'></script>
   <link rel="stylesheet" href="<?= base_url('assets')?>/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-  <link rel="stylesheet" href="<?= base_url('assets')?>/plugins/formValidation/formValidation.min.css">
+  <!-- <link rel="stylesheet" href="<?= base_url('assets')?>/plugins/formValidation/formValidation.min.css"> -->
   <link rel="stylesheet" href="<?= base_url('assets')?>/plugins/toastr/toastr.min.css">
   <link rel="stylesheet" href="<?= base_url('assets')?>/css/adminlte.min.css">
   <?php

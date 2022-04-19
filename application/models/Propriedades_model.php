@@ -62,4 +62,20 @@ class Propriedades_model extends CI_Model {
 			return false;
 		}
 	}
+
+	public function lista_propriedades_por_proprietario($codigo_prop){
+		$this->db->select("*");
+		$this->db->from("propriedade");
+		$this->db->where("ativo_pro", true);
+		$this->db->where("codigo_prop", $codigo_prop);
+		$query = $this->db->get();
+
+		// print_r($this->db->last_query());exit;
+		
+		if ($query->num_rows() >= 1) {
+			return $query->result();
+		} else {
+			return false;
+		}
+	}
 }

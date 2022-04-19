@@ -72,7 +72,7 @@ class Propriedade extends CI_Controller{
       ];
       $inserePropriedade = $this->propriedades_model->insert_propriedade($dados);
       if ($inserePropriedade){
-        echo json_encode(array('retorno' => true, 'msg' => 'Propriedade cadastrado com sucesso!'));
+        echo json_encode(array('retorno' => true, 'msg' => 'Propriedade cadastrada com sucesso!'));
       }else{
         echo json_encode(array('retorno' => false, 'msg' => 'Erro no cadastramento do propriedade'));
       }
@@ -86,6 +86,18 @@ class Propriedade extends CI_Controller{
     $codigo_pro = $this->input->post('codigo_pro');
     
     $data = $this->propriedades_model->busca_propriedade($codigo_pro, $this->session->userdata('usuario')['codigo_user'])[0];
+    if($data){
+      echo json_encode(array('retorno' => true, 'dados' => $data));
+    }else{
+      echo json_encode(array('retorno' => false, 'msg' => 'Dados do Proprietário não encontrados'));
+    }
+  }
+
+  public function lista_propriedades_porproprietario(){
+    $this->load->model('propriedades_model');
+    $codigo_prop = $this->input->post('codigo_prop');
+    
+    $data = $this->propriedades_model->lista_propriedades_por_proprietario($codigo_prop);
     if($data){
       echo json_encode(array('retorno' => true, 'dados' => $data));
     }else{

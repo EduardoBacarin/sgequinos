@@ -15,6 +15,7 @@ class Exame extends CI_Controller{
     if(empty($this->session->userdata('usuario')) || $this->session->userdata('usuario') == false){
       redirect('login');
     }
+    $this->load->helper('funcoes_helper');
   }
 
   public function index(){
@@ -44,8 +45,10 @@ class Exame extends CI_Controller{
 
     $rodape['js'] = array(
         'assets/js/exames_cadastro.js' . V,
+        'assets/js/desenhar.js' . V,
         'assets/js/funcoes.js' . V,
     );
+
     
     $data['laboratorios'] = $this->laboratorios_model->lista_laboratorios();
     $data['veterinarios'] = $this->veterinarios_model->lista_veterinarios();
@@ -57,38 +60,46 @@ class Exame extends CI_Controller{
   }
 
   public function salvar_exame(){
+    $this->load->model('animais_model');
+    $this->load->model('exames_model');
     $post = $this->input->post();
-    echo json_encode($post);exit;
     if (!empty($post)){
+      $resenha_base64 = $post['resenha_base64'];
+      $caminho_resenha = converte_resenha_base64($resenha_base64, $post['numeroexame_exa']);
 
-      if ($post['codigo_ani'] == 0 ){
+      if (empty($post['select_animal'])){
         $dados_cavalo = [
-          'codigo_lab' => $post['codigo_lab'],
-          'codigo_prop' => $post['codigo_prop'],
-          'codigo_vet'  => $this->session->userdata('usuario')['codigo_user'],
-          'nome_ani'    => $post['nome_ani'],
-          'registro_ani' => $post['registroanimal_exa'],
-          'especie_ani' => $post['especie_ani'],
-          'raca_ani'   => $post['raca_ani'],
-          'sexo_ani'   => $post['sexo_ani'],
-          'idade_ani' => $post['idade_ani'],
-          'classificacao_ani' => $post['classificacao_ani'],
+          'codigo_lab'             => $post['codigo_lab'],
+          'codigo_prop'            => $post['codigo_prop'],
+          'codigo_pro'             => $post['select_propriedade'],
+          'codigo_vet'             => $this->session->userdata('usuario')['codigo_user'],
+          'nome_ani'               => $post['nome_ani'],
+          'registro_ani'           => $post['registro_ani'],
+          'especie_ani'            => $post['especie_ani'],
+          'raca_ani'               => $post['raca_ani'],
+          'sexo_ani'               => $post['sexo_ani'],
+          'idade_ani'              => $post['idade_ani'],
+          'classificacao_ani'      => $post['select_classificacao'],
           'outraclassificacao_ani' => (!empty($post['outraclassificacao_ani']) ? $post['outraclassificacao_ani'] : ''),
+          'resenha_ani'            => $caminho_resenha
         ];
 
-        $insereAnimal = 0;
-    }
+        $insereAnimal = $this->animais_model->insert_animal($dados_cavalo);
+        $post['select_animal'] = $insereAnimal;
+      }
+
       $dados_exame = [
         'codigo_lab' => $post['codigo_lab'],
         'codigo_prop' => $post['codigo_prop'],
         'codigo_vet'  => $this->session->userdata('usuario')['codigo_user'],
+        'codigo_ani'  => $post['select_animal'],
         'numeroexame_exa' => $post['numeroexame_exa'],
-        'registroanimal_exa' => $post['registroanimal_exa'],
+        'registroanimal_exa' => $post['registro_ani'],
         'status_exa'         => 1,
         'comentarios_exa'    => (!empty($post['comentarios_exa']) ? $post['comentarios_exa'] : ''),
       ];
       
-      $insereExame = 0;
+      $insereExame = $this->exames_model->insert_exame($dados_exame);
       if ($insereExame){
         echo json_encode(array('retorno' => true, 'msg' => 'Exame cadastrado com sucesso!'));
       }else{
@@ -98,5 +109,4 @@ class Exame extends CI_Controller{
       echo json_encode(array('retorno' => false, 'msg' => 'Erro no cadastramento da exame'));
     }
   }
-
 }

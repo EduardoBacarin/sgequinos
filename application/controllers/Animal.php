@@ -71,11 +71,11 @@ class Animal extends CI_Controller{
     }
   }
 
-  public function busca_propriedade(){
-    $this->load->model('propriedades_model');
-    $codigo_pro = $this->input->post('codigo_pro');
+  public function busca_animal(){
+    $this->load->model('animais_model');
+    $codigo_ani = $this->input->post('codigo_ani');
     
-    $data = $this->propriedades_model->busca_propriedade($codigo_pro, $this->session->userdata('usuario')['codigo_user'])[0];
+    $data = $this->animais_model->busca_animal($codigo_ani, $this->session->userdata('usuario')['codigo_user'])[0];
     if($data){
       echo json_encode(array('retorno' => true, 'dados' => $data));
     }else{
