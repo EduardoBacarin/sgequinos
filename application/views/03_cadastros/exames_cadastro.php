@@ -336,7 +336,7 @@
                 </div>
               </div>
               <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Salvar</button>
+                <button type="submit" class="btn btn-primary" id="btn-salvar-exame">Salvar</button>
               </div>
               </form>
             </div>
@@ -347,6 +347,8 @@
   </section>
 </div>
 
+
+<!-- MODAL CADASTRO DE PROPRIEDADE -->
 <div class="modal fade" id="modal-cadastro-propriedade">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">

@@ -1,8 +1,34 @@
 var base_url = $("#base_url").val();
-$(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-  })
+
 $(document).ready(function () {
+
+    /* BLUR DE CHECAGEM SE O NÚMERO DO EXAME JÁ EXISTE */
+    $('#numeroexame_exa').on('blur', function () {
+        var numero_exame = $(this).val();
+        if ( numero_exame.length > 0 ) {
+            $.ajax({
+                url: base_url + 'exame/busca_numero_exame',
+                type: 'POST',
+                data: {
+                    numero_exame: numero_exame
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.retorno) {
+                        $('#btn-salvar-exame').prop('disabled', false);
+                    } else {
+                        $('#btn-salvar-exame').prop('disabled', true);
+                        erro(data.msg);
+                    }
+                },
+                error: function () {
+                    erro('Não foi possível buscar os exames com este número');
+                }
+            });
+        }
+    });
+    /* FINAL DO BLUR DE CHECAGEM SE O NÚMERO DO EXAME JÁ EXISTE */
+
     /* SELECT DO LABORATÓRIO */
     $('#select_laboratorio').on('change', function () {
         var codigo_lab = $(this).val();
@@ -35,6 +61,7 @@ $(document).ready(function () {
             }
         });
     });
+    /* FINAL DO SELECT DO LABORATÓRIO */
 
     /* SELECT DO PROPRIETÁRIO */
     $('#select_proprietarios').on('change', function () {
@@ -163,7 +190,9 @@ $(document).ready(function () {
             $('#select_propriedade').val(0).trigger('change');
         }
     });
+    /* FINAL DO SELECT DO PROPRIETÁRIO */
 
+    /* SELECT DO ANIMAL */
     $('#select_animal').on('change', function () {
         var codigo_ani = $(this).val();
         if (codigo_ani !== '0') {
@@ -206,7 +235,7 @@ $(document).ready(function () {
         }
     });
 
-
+    /* SELECT DA PROPRIEDADE */
     $('#select_propriedade').on('change', function () {
         var cidade = $(this).find(':selected').data('cidade');
         var estado = $(this).find(':selected').data('estado');
@@ -215,7 +244,7 @@ $(document).ready(function () {
         $('#estado_ani').val(estado);
     });
 
-
+    /* SELECT DA CLASSIFICAÇÃO */
     $('#select_classificacao').on('change', function () {
         var codigo_classificacao = $(this).val();
         if (codigo_classificacao == 6) {
@@ -225,6 +254,7 @@ $(document).ready(function () {
         }
     });
 
+    /* FORMULÁRIO DE CADASTRO DO EXAME */
     $('#formCadastroExame').formValidation({
             framework: 'bootstrap',
             excluded: [':disabled', ':hidden', ':not(:visible)'],
@@ -365,7 +395,9 @@ $(document).ready(function () {
                 }
             });
         });
+    /* FINAL DO FORMULÁRIO DE CADASTRO DO EXAME */
 
+    /* FORMULÁRIO DO MODAL DE CADASTRO DE PROPRIEDADE */
     $('#formModalCadastroPropriedade').formValidation({
             framework: 'bootstrap',
             excluded: [':disabled', ':hidden', ':not(:visible)'],
@@ -431,7 +463,7 @@ $(document).ready(function () {
                         $('#estadouf_pro').val('')
                         $('#observacao_pro').text('')
                         var codigo_prop = $('#codigo_prop').val();
-                        if (codigo_prop != 0){
+                        if (codigo_prop != 0) {
                             $.ajax({
                                 url: base_url + 'propriedade/lista_propriedades_porproprietario',
                                 type: 'POST',
@@ -476,4 +508,5 @@ $(document).ready(function () {
                 }
             });
         });
+    /* FINAL DO FORMULÁRIO DO MODAL DE CADASTRO DE PROPRIEDADE */
 });

@@ -109,4 +109,19 @@ class Exame extends CI_Controller{
       echo json_encode(array('retorno' => false, 'msg' => 'Erro no cadastramento da exame'));
     }
   }
+
+
+  public function busca_numero_exame(){
+    $this->load->model('exames_model');
+    $numero_exame = $this->input->post('numero_exame');
+    // echo json_encode($numero_exame);exit;
+    if (!empty($numero_exame)){
+      $busca_exame = $this->exames_model->busca_numero_exame($numero_exame, $this->session->userdata('usuario')['codigo_user']);
+      if (empty($busca_exame)){
+        echo json_encode(array('retorno' => true));
+      }else{
+        echo json_encode(array('retorno' => false, 'msg' => 'Número do exame já existe, utilize outro valor.'));
+      }
+    }
+  }
 }
