@@ -215,7 +215,7 @@
                 <div class="col-md-3">
                   <div class="form-group">
                     <label for="select_animal">Selecione o Animal</label>
-                    <select class="form-control" id="select_animal" name="select_animal" disabled data-toggle="tooltip" data-placement="top" title='Dica: Se o proprietário não tiver um animal cadastrado, complete os dados do animal e ele será cadastrado automaticamente.'>
+                    <select class="form-control" id="select_animal" name="select_animal" data-toggle="tooltip" data-placement="top" title='Dica: Se o proprietário não tiver um animal cadastrado, deixe esse campo vazio e complete os dados do animal e ele será cadastrado automaticamente.'>
                       <option value="0" selected>Selecione o proprietário primeiro</option>
                     </select>
                   </div>
@@ -271,8 +271,8 @@
                 </div>
                 <div class="col-md-1">
                   <div class="form-group">
-                    <button type="button" class="btn btn-primary mt-4" data-toggle="modal" data-target="#modal-cadastro-propriedade" data-toggle="tooltip" data-placement="top" title='Cadastre aqui uma propriedade.'>
-                      <i class="fa-solid fa-plus"></i>
+                    <button type="button" class="btn btn-primary mt-4" data-toggle="modal" data-target="#modal-cadastro-propriedade">
+                      <i class="fa-solid fa-plus" data-toggle="tooltip" data-placement="top" title='Cadastre aqui uma propriedade.'></i>
                     </button>
                   </div>
                 </div>

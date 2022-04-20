@@ -110,7 +110,7 @@ $(document).ready(function () {
                             success: function (data) {
                                 if (data.retorno) {
                                     /* ADICIONA OS ANIMAIS NO SELECT OPTION */
-                                    $('#select_animal').prop('disabled', false);
+                                    $('#select_animal').prop('readonly', false);
                                     $('#select_animal')
                                         .find('option')
                                         .remove()
