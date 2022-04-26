@@ -19,7 +19,7 @@ class Exame extends CI_Controller{
   }
 
   public function index(){
-    $this->load->model('laboratorios_model');
+    $this->load->model('exames_model');
     $topo['css_link'] = array(
       '//cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css'
     );
@@ -27,7 +27,12 @@ class Exame extends CI_Controller{
     $rodape['js'] = array(
         'assets/js/exames.js' . V,
     );
-    $data['laboratorios'] = $this->laboratorios_model->lista_laboratorios();
+
+    if ($this->session->userdata('usuario')['tipo_user'] == 1){
+      $data['exames'] = $this->exames_model->lista_exames_vet($this->session->userdata('usuario')['codigo_user']);
+    }else{
+      $data['exames'] = $this->exames_model->lista_exames_lab($this->session->userdata('usuario')['codigo_user']);
+    }
     // echo json_encode($data['laboratorios']);exit;
     $this->load->view('estrutura/topo', $topo);
     $this->load->view('04_listas/exames_lista', $data);
@@ -119,6 +124,19 @@ class Exame extends CI_Controller{
       $busca_exame = $this->exames_model->busca_numero_exame($numero_exame, $this->session->userdata('usuario')['codigo_user']);
       if (empty($busca_exame)){
         echo json_encode(array('retorno' => true));
+      }else{
+        echo json_encode(array('retorno' => false, 'msg' => 'Número do exame já existe, utilize outro valor.'));
+      }
+    }
+  }
+
+  public function buscar_exame(){
+    $this->load->model('exames_model');
+    $codigo_exa = $this->input->post('codigo_exa');
+    if (!empty($codigo_exa)){
+      $busca_exame = $this->exames_model->buscar_exame($codigo_exa);
+      if (!empty($busca_exame)){
+        echo json_encode(array('retorno' => true, 'dados' => $busca_exame[0]));
       }else{
         echo json_encode(array('retorno' => false, 'msg' => 'Número do exame já existe, utilize outro valor.'));
       }

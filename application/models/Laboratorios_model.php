@@ -41,7 +41,7 @@ class Laboratorios_model extends CI_Model {
 
 		// print_r($this->db->last_query());exit;
 		
-		if ($query->num_rows() == 1) {
+		if ($query->num_rows() > 0) {
 			return $query->result();
 		} else {
 			return false;
