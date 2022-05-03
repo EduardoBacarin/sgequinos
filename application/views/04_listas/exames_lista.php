@@ -22,11 +22,13 @@
     <!-- Default box -->
     <div class="card">
       <div class="card-body">
-        <div class="row">
-          <div class="ml-auto mb-3">
-            <a href="<?= base_url('exame/cadastrar_exame') ?>" class="btn btn-info"><i class="fa-solid fa-plus mr-2"></i>Adicionar</a>
+        <?php if ($this->session->userdata('usuario')['tipo_user'] == 1) { ?>
+          <div class="row">
+            <div class="ml-auto mb-3">
+              <a href="<?= base_url('exame/cadastrar_exame') ?>" class="btn btn-info"><i class="fa-solid fa-plus mr-2"></i>Adicionar</a>
+            </div>
           </div>
-        </div>
+        <?php } ?>
         <div class="row">
           <div class="col-md-12">
             <table id="tabela-exames" style="width: 100%">
@@ -38,47 +40,11 @@
                 <th>Registro do Animal</th>
                 <th>Status</th>
                 <th>Ações</th>
+                <th>Data Inicio Exame</th>
+                <th>Data Fim Exame</th>
               </thead>
               <tbody>
-                <?php
-                $contador = 0;
-                foreach ($exames as $exa) {
-                  $contador++;
-                  $status = '';
-                  if ($exa->status_exa == 1) {
-                    $status = '<i class="fa-solid fa-clock" style="color: orange;"></i> Aguardando';
-                  } else if ($exa->status_exa == 2) {
-                    $status = ' <i class="fa-solid fa-microscope" style="color: orange;"></i> Em Análise';
-                  } else if ($exa->status_exa == 3) {
-                    $status = ' <i class="fa-solid fa-circle-check" style="color: green;"></i> Aprovado';
-                  } else if ($exa->status_exa == 4) {
-                    $status = '<i class="fa-solid fa-ban" style="color: red;"></i> Reprovado';
-                  }
-                ?>
-                  <tr>
-                    <td><?= $contador ?></td>
-                    <td align="right"><?= $exa->numeroexame_exa ?></td>
-                    <td><?= $exa->nome_prop ?></td>
-                    <td><?= $exa->nome_ani ?></td>
-                    <td align="right"><?= $exa->registroanimal_exa ?></td>
-                    <td align="center"><?= $status ?></td>
-                    <td align="center">
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown">Ações </button>
-                        <div class="dropdown-menu">
-                          <a class="dropdown-item item-ver-detalhes" data-codigo="<?= $exa->codigo_exa ?>"> <i class="fa-solid fa-magnifying-glass text-primary"></i> Ver Detalhes</a>
-                          <?php if ($this->session->userdata('usuario')['tipo_user'] == 2) { ?>
-                            <a class="dropdown-item item-aprovar-exame"> <i class="fa-solid fa-circle-check text-success"></i> Aprovar</a>
-                            <a class="dropdown-item item-reprovar-exame"> <i class="fa-solid fa-ban text-danger"></i> Reprovar</a>
-                          <?php }; ?>
-                          <?php if ($this->session->userdata('usuario')['tipo_user'] == 1) { ?>
-                            <a class="dropdown-item item-excluir-exame"> <i class="fa-solid fa-trash-can"></i> Excluir</a>
-                          <?php }; ?>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                <?php } ?>
+                
               </tbody>
             </table>
           </div>

@@ -63,19 +63,52 @@ class Exames_model extends CI_Model {
 		}
 	}
 
-	public function lista_exames_lab($codigo_lab){
+	public function conta_exames_vet($codigo_vet){
+		$this->db->select("COUNT(codigo_exa)");
+		$this->db->from("exame");
+		$this->db->where("codigo_vet", $codigo_vet);
+		$this->db->where("ativo_exa", true);
+        $this->db->order_by("exame.codigo_exa", "DESC");
+		$total = $this->db->count_all_results();
+		
+		if ($this->db->count_all_results() >= 1) {
+			return $total -1;
+		} else {
+			return 0;
+		}
+	}
+
+	public function lista_exames_lab($codigo_lab, $limit, $offset){
 		$this->db->select("*");
 		$this->db->from("exame");
-		$this->db->where("codigo_lab", $codigo_lab);
-		$this->db->where("ativo_exa", true);
+		$this->db->join('proprietario', 'exame.codigo_prop = proprietario.codigo_prop');
+		$this->db->join('animal', 'exame.codigo_ani = animal.codigo_ani');
+		$this->db->where("exame.codigo_lab", $codigo_lab);
+		$this->db->where("exame.ativo_exa", true);
+        $this->db->order_by("exame.codigo_exa", "DESC");
+        $this->db->limit($limit, $offset);
 		$query = $this->db->get();
-	
 		// print_r($this->db->last_query());exit;
 		
 		if ($query->num_rows() >= 1) {
 			return $query->result();
 		} else {
 			return false;
+		}
+	}
+
+	public function conta_exames_lab($codigo_lab){
+		$this->db->select("COUNT(codigo_exa)");
+		$this->db->from("exame");
+		$this->db->where("codigo_lab", $codigo_lab);
+		$this->db->where("ativo_exa", true);
+        $this->db->order_by("exame.codigo_exa", "DESC");
+		$total = $this->db->count_all_results();
+		
+		if ($this->db->count_all_results() >= 1) {
+			return $total -1;
+		} else {
+			return 0;
 		}
 	}
 
@@ -99,5 +132,48 @@ class Exames_model extends CI_Model {
 			return false;
 		}
 	}
+
+	public function em_analise_exame($codigo_exa){
+		date_default_timezone_set('America/Sao_Paulo');
+
+		$datahoje  = new DateTime();
+		$data2dias = new DateTime();
+		$data2dias = $data2dias->add(new DateInterval('P2D'));
+
+        $this->db->set('status_exa', 2);
+        $this->db->set('inicioanalise_exa', $datahoje->format('Y-m-d H:i:s'));
+        $this->db->set('fimanalise_exa', $data2dias->format('Y-m-d H:i:s'));
+
+        $this->db->where("codigo_exa", $codigo_exa);
+
+        if ($this->db->update("exame")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+	public function aprovar_exame($codigo_exa){
+        $this->db->set('status_exa', 3);
+
+        $this->db->where("codigo_exa", $codigo_exa);
+
+        if ($this->db->update("exame")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+	public function reprovar_exame($codigo_exa){
+        $this->db->set('status_exa', 4);
+
+        $this->db->where("codigo_exa", $codigo_exa);
+
+        if ($this->db->update("exame")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }

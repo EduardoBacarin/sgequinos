@@ -39,6 +39,7 @@
                   foreach ($laboratorios as $lab){ 
                   $contador++
                   ?>
+                  <tr>
                     <td><?= $contador ?></td>
                     <td><?=$lab->nome_lab?></td>
                     <td><?=$lab->email_lab?></td>
@@ -46,6 +47,7 @@
                     <td><?=$lab->portariacredenciamento_lab?></td>
                     <td><?=$lab->rua_lab . ', ' . $lab->numero_lab?></td>
                     <td><?=$lab->cidade_lab . ' - ' . $lab->estadouf_lab?></td>
+                  </tr>
                   <?php } ?>
                 </tbody>
               </table>

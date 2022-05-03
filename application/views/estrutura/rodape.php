@@ -19,10 +19,12 @@
 <script src="<?= base_url('assets')?>/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <script src="<?= base_url('assets')?>/js/adminlte.min.js"></script>
 <script src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="<?= base_url('assets/plugins/formValidation/formValidation.min.js') ?>"></script>
 <script src="<?= base_url('assets/plugins/toastr/toastr.min.js') ?>"></script>
 <script src="<?= base_url('assets/js/funcoes.js') ?>"></script>
 <script src="<?= base_url('assets/plugins/formValidation/framework/bootstrap.min.js') ?>"></script>
+<script src="<?= base_url('assets/plugins/jquery.countdown-2.1.0/jquery.countdown.js') ?>"></script>
 
 <?php
 if (!empty($js_link)) {

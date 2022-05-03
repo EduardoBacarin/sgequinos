@@ -1,24 +1,55 @@
 var base_url = $("#base_url").val();
 
 $(document).ready(function () {
-    $('#tabela-exames').DataTable({
-        "ordering": true,
-        "filter": true,
-        "lengthMenu": [25],
-        "responsive": true,
-        "columns": [
-          { "width": "5%",  "name": "Posição"},
-          { "width": "10%", "name": "Número do Exame"},
-          { "width": "15%", "name": "Proprietário"},
-          { "width": "15%", "name": "Nome do Animal"},
-          { "width": "10%", "name": "Registro do Animal"},
-          { "width": "10%", "name": "Status"},
-          { "width": "10%", "name": "Ações"}
-        ],
+    $("#tabela-exames").DataTable({
+      "ordering": false,
+      "serverSide": true,
+      "aaSorting": [],
+      "order": [],
+      "filter": false,
+      "lengthMenu": [[10, 50, 75, 100], ['10', '50', '75', '100']],
+      "processing": true,
+      "ajax": base_url + "exame/lista_exames",
+      "columns": [
+        { "width": "5%",  "name": "Posição"},
+        { "width": "20%", "name": "Número do Exame"},
+        { "width": "30%", "name": "Proprietário"},
+        { "width": "5%",  "name": "Nome do Animal"},
+        { "width": "15%", "name": "Registro do Animal"},
+        { "width": "15%", "name": "Status", 
+          render: function ( data, type, row, meta ) {
+            if (data == 1){
+              return '<i class="fa-solid fa-clock" style="color: orange;"></i> Aguardando';
+            }else if (data == 2){
+              datafimstr = row[8].replace(/-/g,"/"); 
+
+              $("#contador-"+row[0]).countdown(new Date(row[8]), function(event) {
+                  var totalHours = event.offset.totalDays * 24 + event.offset.hours;
+                  $(this).text(
+                    event.strftime(totalHours+':%M:%S')
+                  );
+              });
+              var status = '<i class="fa-solid fa-microscope" style="color: orange;"></i> Em Análise<br><span class="countdown-analise justify-content-center" id="contador-'+row[0]+'"></span>';
+              return status;
+            }else if (data == 3){
+              return ' <i class="fa-solid fa-circle-check" style="color: green;"></i> Aprovado';
+            }else if (data == 4){
+              return '<i class="fa-solid fa-ban" style="color: red;"></i> Reprovado';
+            }
+          }
+        },
+        { "width": "10%", "name": "Ações"}
+      ],
+      "columnDefs": [
+        {
+            "targets": [ 7, 8 ],
+            "visible": false
+        }
+      ],
     });
 
 
-    $('.item-ver-detalhes').on('click', function(){
+    $(document).on('click', '.item-ver-detalhes', function(){
       var codigo_exa = $(this).data('codigo');
 
       $.ajax({
@@ -97,6 +128,60 @@ $(document).ready(function () {
               error('Exame não encontrado, atualize a página e tente novamente.')  
             }
         }
+      });
     });
+
+    $(document).on('click', '.item-aprovar-exame', function(){
+      var codigo_exa = $(this).data('codigo');
+      $.ajax({
+        url: base_url + 'exame/aprovar_exame',
+        type: 'POST',
+        data: { codigo_exa: codigo_exa },
+        dataType: 'json',
+        success: function (data) {
+            if (data.retorno) {
+              $('#tabela-exames').DataTable().draw();
+              sucesso(data.msg);
+            } else {
+              error('Exame não encontrado, atualize a página e tente novamente.')
+            }
+        }
+      });
+    });
+
+    $(document).on('click', '.item-reprovar-exame', function(){
+      var codigo_exa = $(this).data('codigo');
+      $.ajax({
+        url: base_url + 'exame/reprovar_exame',
+        type: 'POST',
+        data: { codigo_exa: codigo_exa },
+        dataType: 'json',
+        success: function (data) {
+            if (data.retorno) {
+              $('#tabela-exames').DataTable().draw();
+              sucesso(data.msg);
+            } else {
+              error('Exame não encontrado, atualize a página e tente novamente.')
+            }
+        }
+      });
+    });
+
+    $(document).on('click', '.item-emanalise-exame', function(){
+      var codigo_exa = $(this).data('codigo');
+      $.ajax({
+        url: base_url + 'exame/em_analise_exame',
+        type: 'POST',
+        data: { codigo_exa: codigo_exa },
+        dataType: 'json',
+        success: function (data) {
+            if (data.retorno) {
+              $('#tabela-exames').DataTable().draw();
+              sucesso(data.msg);
+            } else {
+              error('Exame não encontrado, atualize a página e tente novamente.')
+            }
+        }
+      });
     });
 });

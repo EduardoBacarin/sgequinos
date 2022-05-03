@@ -214,6 +214,13 @@ $(document).ready(function () {
                         $('#select_propriedade').val(data.dados['codigo_pro']);
                         $('#cidade_ani').val(data.dados['cidade_pro']);
                         $('#estado_ani').val(data.dados['estadouf_pro']);
+                        var img = new Image();
+                        img.onload = function() {
+                            var f_img = new fabric.Image(img);
+                            canvas.setBackgroundImage(f_img);
+                            canvas.renderAll();
+                        };
+                        img.src = base_url + data.dados['resenha_ani'];
                     } else {
                         alert('Nenhum animal encontrado');
                     }
@@ -387,10 +394,10 @@ $(document).ready(function () {
                 contentType: false,
                 processData: false,
                 success: function (data) {
-                    if (data.retorno == false) {
-                        erro('Usuário ou Senha Inválida');
+                    if (data.retorno) {
+                        window.location.href = 'http://localhost/sgequinos/exame';
                     } else {
-
+                        erro('Erro ao salvar o exame, verifique todos os dados e tente novamente');
                     }
                 }
             });

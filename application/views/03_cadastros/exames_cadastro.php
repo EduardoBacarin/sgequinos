@@ -32,7 +32,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="numeroexame_exa">Número do Exame</label>
-                      <input type="text" class="form-control" id="numeroexame_exa" name="numeroexame_exa" placeholder="Número do Exame">
+                      <input type="number" class="form-control" id="numeroexame_exa" name="numeroexame_exa" placeholder="Número do Exame">
                     </div>
                   </div>
                 </div>
