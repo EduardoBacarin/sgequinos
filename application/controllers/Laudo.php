@@ -57,15 +57,8 @@ class Laudo extends CI_Controller{
     $data['qtdequinos_propriedade'] = $exame->qtdequinos_pro;
     $data['imagem_animal']  = $exame->resenha_ani;
     $data['descricao_animal']  = $exame->descricao_ani;
-
-    if($formato == 'pdf'){
-      $html = $this->load->view('05_laudo/laudo', $data, true);
-
-      $this->load->library('Pdfgenerator');
-      $this->pdfgenerator->generate($html,$numero_exame, true, 0); //generate($html,$barcode_boleto, true, 1) ultimo parametro para download do pdf
-    }else{
-      $this->load->view('05_laudo/laudo', $data);
-    }
+    
+    $this->load->view('05_laudo/requisicao', $data);
 
   }
 }

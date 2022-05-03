@@ -2,7 +2,7 @@
 
 <head>
     <meta charset="utf-8"/>
-    <title>Pixcred | BolePix</title>
+    <title>Requisição | SGEquinos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="<?= base_url('assets/imagens/logo/favicon.png') ?>">
     <meta content="" name="description"/>
