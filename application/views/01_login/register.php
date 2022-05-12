@@ -15,7 +15,7 @@
 <div class="register-box">
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <a href="../../index2.html" class="h1"><b>Admin</b>LTE</a>
+      <img src="<?= base_url('assets/svg/logo_full.svg')?>" style="width: 80%;">
     </div>
     <div class="card-body">
       <p class="login-box-msg">Register a new membership</p>

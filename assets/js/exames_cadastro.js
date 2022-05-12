@@ -3,7 +3,7 @@ var base_url = $("#base_url").val();
 $(document).ready(function () {
 
     /* BLUR DE CHECAGEM SE O NÚMERO DO EXAME JÁ EXISTE */
-    $('#numeroexame_exa').on('blur', function () {
+    /* $('#numeroexame_exa').on('blur', function () {
         var numero_exame = $(this).val();
         if ( numero_exame.length > 0 ) {
             $.ajax({
@@ -26,7 +26,7 @@ $(document).ready(function () {
                 }
             });
         }
-    });
+    }); */
     /* FINAL DO BLUR DE CHECAGEM SE O NÚMERO DO EXAME JÁ EXISTE */
 
     /* SELECT DO LABORATÓRIO */
@@ -211,6 +211,7 @@ $(document).ready(function () {
                         $('#raca_ani').val(data.dados['raca_ani']);
                         $('#sexo_ani').val(data.dados['sexo_ani']);
                         $('#idade_ani').val(data.dados['idade_ani']);
+                        $('#pelagem_ani').val(data.dados['pelagem_ani']);
                         $('#select_propriedade').val(data.dados['codigo_pro']);
                         $('#cidade_ani').val(data.dados['cidade_pro']);
                         $('#estado_ani').val(data.dados['estadouf_pro']);
@@ -271,13 +272,6 @@ $(document).ready(function () {
                 validating: 'glyphicon glyphicon-refresh'
             },
             fields: {
-                numeroexame_exa: {
-                    validators: {
-                        notEmpty: {
-                            message: 'O número do exame não pode ser vazio',
-                        }
-                    }
-                },
                 select_laboratorio: {
                     validators: {
                         notEmpty: {

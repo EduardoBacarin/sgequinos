@@ -110,9 +110,9 @@ $(document).ready(function () {
             processData: false,
             success: function (data) {
                 if (data.retorno) {
-
+                    window.location.href = 'http://localhost/sgequinos/proprietario';
                 } else {
-                    
+                    erro('Falha ao cadastrar o proprietário, verifique os campos');
                 }
             }
         });

@@ -74,9 +74,9 @@ $(document).ready(function () {
             processData: false,
             success: function (data) {
                 if (data.retorno) {
-
+                    window.location.href = 'http://localhost/sgequinos/propriedade';
                 } else {
-                    
+                    erro('Falha ao cadastrar a propriedade, verifique os campos');
                 }
             }
         });

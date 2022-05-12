@@ -48,6 +48,7 @@ class Exames_model extends CI_Model {
 	public function lista_exames_vet($codigo_vet){
 		$this->db->select("*");
 		$this->db->from("exame");
+		$this->db->join('veterinario', 'exame.codigo_vet = veterinario.codigo_vet');
 		$this->db->join('proprietario', 'exame.codigo_prop = proprietario.codigo_prop');
 		$this->db->join('animal', 'exame.codigo_ani = animal.codigo_ani');
 		$this->db->where("exame.codigo_vet", $codigo_vet);
@@ -83,6 +84,7 @@ class Exames_model extends CI_Model {
 		$this->db->from("exame");
 		$this->db->join('proprietario', 'exame.codigo_prop = proprietario.codigo_prop');
 		$this->db->join('animal', 'exame.codigo_ani = animal.codigo_ani');
+		$this->db->join('veterinario', 'exame.codigo_vet = veterinario.codigo_vet');
 		$this->db->where("exame.codigo_lab", $codigo_lab);
 		$this->db->where("exame.ativo_exa", true);
         $this->db->order_by("exame.codigo_exa", "DESC");
@@ -133,6 +135,43 @@ class Exames_model extends CI_Model {
 		}
 	}
 
+	public function busca_numero_mormo($codigo_vet){
+		$this->db->select("*");
+		$this->db->from("exame");
+		$this->db->where("exame.codigo_vet", $codigo_vet);
+		$this->db->where("exame.tipoexame_exa", 1);
+		$this->db->order_by("codigo_exa", "ASC");
+
+		$query = $this->db->get();
+	
+		// print_r($this->db->last_query());exit;
+		
+		if ($query->num_rows() >= 1) {
+			return $query->num_rows();;
+		} else {
+			return false;
+		}
+	}
+
+	public function busca_numero_aie($codigo_vet){
+		$this->db->select("*");
+		$this->db->from("exame");
+		$this->db->where("exame.codigo_vet", $codigo_vet);
+		$this->db->where("exame.tipoexame_exa", 2);
+		$this->db->order_by("codigo_exa", "ASC");
+		$this->db->limit(1);
+		$query = $this->db->get();
+	
+		// print_r($this->db->last_query());exit;
+		
+		if ($query->num_rows() >= 1) {
+			return $query->num_rows();
+		} else {
+			return false;
+		}
+	}
+	
+
 	public function em_analise_exame($codigo_exa){
 		date_default_timezone_set('America/Sao_Paulo');
 
@@ -154,7 +193,11 @@ class Exames_model extends CI_Model {
     }
 
 	public function aprovar_exame($codigo_exa){
+		date_default_timezone_set('America/Sao_Paulo');
+		$datahoje  = new DateTime();
+		
         $this->db->set('status_exa', 3);
+        $this->db->set('datarecepcao_exa', $datahoje->format('Y-m-d H:i:s'));
 
         $this->db->where("codigo_exa", $codigo_exa);
 

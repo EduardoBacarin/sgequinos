@@ -26,6 +26,7 @@
             </div>
             <form id="formCadastroAnimal" novalidate="novalidate" enctype="multipart/form-data">
               <input type="hidden" id="codigo_ani" value="<?=!empty($animal) ? $animal->nome_ani : 0?>" name="codigo_ani">
+              <input type="hidden" id="codigo_propriedade" value="<?=!empty($animal) ? $animal->codigo_pro : 0?>" name="codigo_propriedade">
               <div class="card-body">
                 <div class="row">
                   <div class="col-md-3">
@@ -60,24 +61,10 @@
                       <input type="text" class="form-control" id="cidade_ani" name="cidade_ani" placeholder="Cidade" readonly>
                     </div>
                   </div>
-                  <div class="col-md-1">
+                  <div class="col-md-2">
                     <div class="form-group">
                       <label for="estado_ani">Estado</label>
                       <input type="text" class="form-control" id="estado_ani" name="estado_ani" placeholder="Estado" readonly>
-                    </div>
-                  </div>
-                  <div class="col-md-2">
-                    <div class="form-group">
-                      <label for="select_classificacao">Classificação</label>
-                      <select class="form-control" id="select_classificacao" name="select_classificacao">
-                        <option value="0" selected>Selecione a Classificação</option>
-                        <option value="1" <?=!empty($animal) && $animal->classificacao_ani == 1 ? 'selected' : ''?>>JC (Jockey Club)</option>
-                        <option value="2" <?=!empty($animal) && $animal->classificacao_ani == 2 ? 'selected' : ''?>>SH</option>
-                        <option value="3" <?=!empty($animal) && $animal->classificacao_ani == 3 ? 'selected' : ''?>>H</option>
-                        <option value="4" <?=!empty($animal) && $animal->classificacao_ani == 4 ? 'selected' : ''?>>FC</option>
-                        <option value="5" <?=!empty($animal) && $animal->classificacao_ani == 5 ? 'selected' : ''?>>UM</option>
-                        <option value="6" <?=!empty($animal) && $animal->classificacao_ani == 6 ? 'selected' : ''?>>Outro</option>
-                      </select>
                     </div>
                   </div>
                 </div>
@@ -104,6 +91,37 @@
                     <div class="form-group">
                       <label for="raca_ani">Raça</label>
                       <input type="text" class="form-control" id="raca_ani" name="raca_ani" placeholder="Raça" value="<?=!empty($animal) ? $animal->raca_ani : ''?>">
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="select_classificacao">Classificação</label>
+                      <select class="form-control" id="select_classificacao" name="select_classificacao">
+                        <option value="0" selected>Selecione a Classificação</option>
+                        <option value="1" <?=!empty($animal) && $animal->classificacao_ani == 1 ? 'selected' : ''?>>JC (Jockey Club)</option>
+                        <option value="2" <?=!empty($animal) && $animal->classificacao_ani == 2 ? 'selected' : ''?>>SH</option>
+                        <option value="3" <?=!empty($animal) && $animal->classificacao_ani == 3 ? 'selected' : ''?>>H</option>
+                        <option value="4" <?=!empty($animal) && $animal->classificacao_ani == 4 ? 'selected' : ''?>>FC</option>
+                        <option value="5" <?=!empty($animal) && $animal->classificacao_ani == 5 ? 'selected' : ''?>>UM</option>
+                        <option value="6" <?=!empty($animal) && $animal->classificacao_ani == 6 ? 'selected' : ''?>>Outro</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-2">
+                    <div class="form-group">
+                      <label for="pelagem_ani">Pelagem</label>
+                      <input type="text" class="form-control" id="pelagem_ani" name="pelagem_ani" placeholder="Pelagem" value="<?=!empty($animal) ? $animal->pelagem_ani : ''?>">
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-group">
+                      <label for="estgestacional_ani">Estado Gestacional</label>
+                      <select class="form-control" id="estgestacional_ani" name="estgestacional_ani">
+                        <option value="1" value="<?=!empty($animal) && $animal->estgestacional_ani == 1 ? 'selected' : ''?>">NÃO</option>
+                        <option value="2" value="<?=!empty($animal) && $animal->estgestacional_ani == 2 ? 'selected' : ''?>">SIM</option>
+                      </select>
                     </div>
                   </div>
                   <div class="col-md-1">

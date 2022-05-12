@@ -12,18 +12,19 @@ $(document).ready(function () {
       "ajax": base_url + "exame/lista_exames",
       "columns": [
         { "width": "5%",  "name": "Posição"},
-        { "width": "20%", "name": "Número do Exame"},
-        { "width": "30%", "name": "Proprietário"},
-        { "width": "5%",  "name": "Nome do Animal"},
+        { "width": "15%", "name": "Número do Exame"},
+        { "width": "25%", "name": "Veterinário"},
+        { "width": "25%", "name": "Proprietário"},
+        { "width": "15%",  "name": "Nome do Animal"},
         { "width": "15%", "name": "Registro do Animal"},
         { "width": "15%", "name": "Status", 
           render: function ( data, type, row, meta ) {
             if (data == 1){
               return '<i class="fa-solid fa-clock" style="color: orange;"></i> Aguardando';
             }else if (data == 2){
-              datafimstr = row[8].replace(/-/g,"/"); 
+              datafimstr = row[9].replace(/-/g,"/"); 
 
-              $("#contador-"+row[0]).countdown(new Date(row[8]), function(event) {
+              $("#contador-"+row[0]).countdown(new Date(row[9]), function(event) {
                   var totalHours = event.offset.totalDays * 24 + event.offset.hours;
                   $(this).text(
                     event.strftime(totalHours+':%M:%S')
@@ -42,8 +43,12 @@ $(document).ready(function () {
       ],
       "columnDefs": [
         {
-            "targets": [ 7, 8 ],
+            "targets": [ 8, 9 ],
             "visible": false
+        },
+        {
+          "targets": [1, 6],
+          "className": 'dt-body-nowrap'
         }
       ],
     });
@@ -178,6 +183,60 @@ $(document).ready(function () {
             if (data.retorno) {
               $('#tabela-exames').DataTable().draw();
               sucesso(data.msg);
+            } else {
+              error('Exame não encontrado, atualize a página e tente novamente.')
+            }
+        }
+      });
+    });
+
+    $(document).on('click', '.item-finalizar-exame', function(){
+      var codigo_exa = $(this).data('codigo');
+      var tipo_exame = $(this).data('tipo');
+      $('#codigo_exa_finaliza').val(codigo_exa);
+      $('#tipo_exame').val(tipo_exame);
+      $('#modal-finaliza-exame').modal('show');
+      $.ajax({
+        url: base_url + 'exame/buscar_exame',
+        type: 'POST',
+        data: { codigo_exa: codigo_exa },
+        dataType: 'json',
+        success: function (data) {
+            if (data.retorno) {
+              var info = data.dados;
+              console.log(info);
+              /* DADOS PROPRIETÁRIO */
+              $('#nome_proprietario').val(info.nome_prop);
+              $('#documento_proprietario').val(info.documento_prop);
+              $('#endereco_proprietario').val(info.endereco_prop);
+              $('#cidadeuf_proprietario').val(info.cidade_prop);
+              $('#telefone_proprietario').val(info.telefone_prop);
+
+              /* DADOS VETERINÁRIO */
+              $('#nome_veterinario').val(info.nome_vet);
+              $('#documento_vet').val(info.documento_vet);
+              $('#crmv_vet').val(info.crmv_vet);
+              $('#portariacredenciamento_vet').val();
+              $('#email_veterinario').val();
+              $('#endereco_veterinario').val();
+              $('#cidadeuf_veterinario').val();
+              $('#telefone_veterinario').val();
+
+              /* DADOS ANIMAL */
+              $('#nome_animal').val();
+              $('#especie_animal').val();
+              $('#raca_animal').val();
+              $('#pelagem_animal').val();
+              $('#sexo_animal').val();
+              $('#estadogestacional_animal').val();
+              $('#idade_animal').val();
+              $('#registro_animal').val();
+
+              /* DADOS PROPRIEDADE */
+              $('#nome_propriedade').val();
+              $('#logradouro_propriedade').val();
+              $('#bairro_propriedade').val();
+              $('#cidadeuf_propriedade').val();
             } else {
               error('Exame não encontrado, atualize a página e tente novamente.')
             }

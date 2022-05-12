@@ -46,21 +46,21 @@
                         <input type="text" class="form-control" id="nome_pro" name="nome_pro" placeholder="Nome da Propriedade">
                       </div>
                     </div>
-                  </div>
-                  <div class="row">
                     <div class="col-md-2">
                       <div class="form-group">
                         <label for="qtdequinos_pro">Quantidade de Equinos</label>
                         <input type="tel" class="form-control" id="qtdequinos_pro" name="qtdequinos_pro" placeholder="Quantidade de Equinos">
                       </div>
                     </div>
-                    <div class="col-md-2">
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3">
                       <div class="form-group">
                         <label for="cep_pro">CEP da Propriedade (Se Existir)</label>
                         <input type="text" class="form-control" id="cep_pro" name="cep_pro" placeholder="CEP da Propriedade">
                       </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                       <div class="form-group">
                         <label for="logradouro_pro">Logradouro</label>
                         <input type="text" class="form-control" id="logradouro_pro" name="logradouro_pro" placeholder="Logradouro da Propriedade"  data-toggle="tooltip" data-placement="top" title='Dica: Se localizado em rodovia, colocar nome da rodovia e qual KM se localiza, por exemplo: "Rod. Julio Budisk, KM 34"'>
@@ -86,6 +86,18 @@
                     </div>
                   </div>
                   <div class="row">
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label for="latitude_pro">Latitude</label>
+                        <input type="text" class="form-control" id="latitude_pro" name="latitude_pro" placeholder="Latitude">
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label for="longitude_pro">Longitude</label>
+                        <input type="text" class="form-control" id="longitude_pro" name="longitude_pro" placeholder="Longitude">
+                      </div>
+                    </div>
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="observacao_pro">Observações</label>

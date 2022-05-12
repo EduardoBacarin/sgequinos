@@ -63,8 +63,34 @@ class Exame extends CI_Controller{
     $this->load->model('exames_model');
     $post = $this->input->post();
     if (!empty($post)){
+      if ($post['tipoexame_exa'] == 1){
+        $busca_numero = $this->exames_model->busca_numero_mormo($this->session->userdata('usuario')['codigo_user']);
+      }else if ($post['tipoexame_exa'] == 2){
+        $busca_numero = $this->exames_model->busca_numero_aie($this->session->userdata('usuario')['codigo_user']);
+      }else if($post['tipoexame_exa'] == 3){
+        $busca_numeromormo = $this->exames_model->busca_numero_aie($this->session->userdata('usuario')['codigo_user']);
+        $busca_numeroaie = $this->exames_model->busca_numero_mormo($this->session->userdata('usuario')['codigo_user']);
+        if (!$busca_numeroaie){
+          $numeroexame_aie = '00001/' . date("Y");
+        }else{
+          $numeroexame_aie = str_pad($busca_numeroaie+1, 5, '0', STR_PAD_LEFT) . '/' . date('Y');
+        }
+        if (!$busca_numeromormo){
+          $numeroexame_mormo = '00001/' . date("Y");
+        }else{
+          $numeroexame_mormo = str_pad($busca_numeromormo+1, 5, '0', STR_PAD_LEFT) . '/' . date('Y');
+        }
+      }
+
+      if (empty($busca_numero) || !$busca_numero){
+        $numeroexame = '00001/' . date("Y");
+      }else{
+        $numeroexame = str_pad($busca_numero+1, 5, '0', STR_PAD_LEFT) . '/' . date('Y');
+      }
+      
+
       $resenha_base64 = $post['resenha_base64'];
-      $caminho_resenha = converte_resenha_base64($resenha_base64, $post['numeroexame_exa']);
+      $caminho_resenha = converte_resenha_base64($resenha_base64, time());
 
       if (empty($post['select_animal'])){
         $dados_cavalo = [
@@ -76,6 +102,8 @@ class Exame extends CI_Controller{
           'especie_ani'            => $post['especie_ani'],
           'raca_ani'               => $post['raca_ani'],
           'sexo_ani'               => $post['sexo_ani'],
+          'pelagem_ani'            => $post['pelagem_ani'],
+          'estgestacional_ani'     => $post['estgestacional_ani'],
           'idade_ani'              => $post['idade_ani'],
           'classificacao_ani'      => $post['select_classificacao'],
           'outraclassificacao_ani' => (!empty($post['outraclassificacao_ani']) ? $post['outraclassificacao_ani'] : ''),
@@ -94,6 +122,8 @@ class Exame extends CI_Controller{
           'registro_ani'           => $post['registro_ani'],
           'especie_ani'            => $post['especie_ani'],
           'raca_ani'               => $post['raca_ani'],
+          'pelagem_ani'            => $post['pelagem_ani'],
+          'estgestacional_ani'     => $post['estgestacional_ani'],
           'sexo_ani'               => $post['sexo_ani'],
           'idade_ani'              => $post['idade_ani'],
           'classificacao_ani'      => $post['select_classificacao'],
@@ -104,18 +134,41 @@ class Exame extends CI_Controller{
         $insereAnimal = $this->animais_model->update_animal($post['select_animal'], $dados_cavalo);
       }
 
-      $dados_exame = [
-        'codigo_lab'          => $post['codigo_lab'],
-        'codigo_prop'         => $post['codigo_prop'],
-        'codigo_vet'          => $this->session->userdata('usuario')['codigo_user'],
-        'codigo_ani'          => $post['select_animal'],
-        'numeroexame_exa'     => $post['numeroexame_exa'],
-        'registroanimal_exa'  => $post['registro_ani'],
-        'status_exa'          => 1,
-        'comentarios_exa'     => (!empty($post['comentarios_exa']) ? $post['comentarios_exa'] : ''),
-      ];
+      if ($post['tipoexame_exa'] == 3){
+        for ($i = 0; $i < 2; $i++){
+          $dados_exame = [
+            'codigo_lab'          => $post['codigo_lab'],
+            'codigo_prop'         => $post['codigo_prop'],
+            'codigo_vet'          => $this->session->userdata('usuario')['codigo_user'],
+            'codigo_ani'          => $post['select_animal'],
+            'numeroexame_exa'     => $i == 0 ? $numeroexame_mormo : $numeroexame_aie,
+            'tipoexame_exa'       => $i == 0 ? 1 : 2,
+            'tiporequisicao_exa'  => $post['tipoexame_exa'],
+            'datacoleta_exa'      => $post['datacoleta_exa'],
+            'registroanimal_exa'  => $post['registro_ani'],
+            'status_exa'          => 1,
+            'comentarios_exa'     => (!empty($post['comentarios_exa']) ? $post['comentarios_exa'] : ''),
+          ];
+          $insereExame = $this->exames_model->insert_exame($dados_exame);
+        }
+      }else{
+        $dados_exame = [
+          'codigo_lab'          => $post['codigo_lab'],
+          'codigo_prop'         => $post['codigo_prop'],
+          'codigo_vet'          => $this->session->userdata('usuario')['codigo_user'],
+          'codigo_ani'          => $post['select_animal'],
+          'numeroexame_exa'     => $numeroexame,
+          'tipoexame_exa'       => $post['tipoexame_exa'],
+          'tiporequisicao_exa'  => $post['tipoexame_exa'],
+          'datacoleta_exa'      => $post['datacoleta_exa'],
+          'registroanimal_exa'  => $post['registro_ani'],
+          'status_exa'          => 1,
+          'comentarios_exa'     => (!empty($post['comentarios_exa']) ? $post['comentarios_exa'] : ''),
+        ];
+        
+        $insereExame = $this->exames_model->insert_exame($dados_exame);
+      }
       
-      $insereExame = $this->exames_model->insert_exame($dados_exame);
       if ($insereExame){
         echo json_encode(array('retorno' => true, 'msg' => 'Exame cadastrado com sucesso!'));
       }else{
@@ -153,23 +206,22 @@ class Exame extends CI_Controller{
               $menu = '<div class="btn-group">
                         <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown">Ações </button>
                         <div class="dropdown-menu">
-                          <a class="dropdown-item item-ver-detalhes" data-codigo="'.$dt->codigo_exa.'"> <i class="fa-solid fa-magnifying-glass text-primary"></i> Ver Detalhes</a>';
+                          <a class="dropdown-item item-ver-detalhes" data-codigo="'.$dt->codigo_exa.'"> <i class="fa-solid fa-magnifying-glass text-primary"></i> Ver Detalhes</a>
+                          <a class="dropdown-item item-emanalise-exame" href="'.base_url('requisicao/').$dt->numeroexame_exa.'" target="_blank"> <i class="fa-solid fa-file-lines"></i> Requisição</a>';
               if ($this->session->userdata('usuario')['tipo_user'] == 2) {
                 if ($dt->status_exa == 1){
-                  $menu .= '<a class="dropdown-item item-emanalise-exame" data-codigo="'.$dt->codigo_exa.'"> <i class="fa-solid fa-microscope" style="color: orange;"></i> Em Análise</a>
-                            <a class="dropdown-item item-aprovar-exame" data-codigo="'.$dt->codigo_exa.'"> <i class="fa-solid fa-circle-check text-success"></i> Aprovar</a>
+                  $menu .= '<a class="dropdown-item item-aprovar-exame" data-codigo="'.$dt->codigo_exa.'"> <i class="fa-solid fa-circle-check text-success"></i> Aprovar</a>
                             <a class="dropdown-item item-reprovar-exame" data-codigo="'.$dt->codigo_exa.'"> <i class="fa-solid fa-ban text-danger"></i> Reprovar</a>';
+                }else if ($dt->status_exa == 3){
+                  $menu .= '<a class="dropdown-item item-emanalise-exame" data-codigo="'.$dt->codigo_exa.'"> <i class="fa-solid fa-microscope" style="color: orange;"></i> Em Análise</a>';
                 }else if ($dt->status_exa == 2){
                   if (!empty($dt->inicioanalise_exa)){
                     $datahoje = new DateTime();
                     $datafim = new DateTime($dt->fimanalise_exa);
-                    if ($datafim > $datahoje){
-                      $menu .= '<a class="dropdown-item item-aprovar-exame" data-codigo="'.$dt->codigo_exa.'"> <i class="fa-solid fa-circle-check text-success"></i> Aprovar</a>
-                      <a class="dropdown-item item-reprovar-exame" data-codigo="'.$dt->codigo_exa.'"> <i class="fa-solid fa-ban text-danger"></i> Reprovar</a>';
+                    if ($datafim < $datahoje){
+                      $menu .= '<a class="dropdown-item item-finalizar-exame" data-codigo="'.$dt->codigo_exa.'" data-tipo="'.$dt->tipoexame_exa.'"> <i class="fa-solid fa-circle-check text-success"></i> Finalizar</a>';
                     }
                   }
-                }else if ($dt->status_exa == 3){
-                  $menu .= '';
                 }else if ($dt->status_exa == 4){
                   $menu .= '';
                 }
@@ -182,10 +234,13 @@ class Exame extends CI_Controller{
               };
               $menu .='</div>
                       </div>';
+              
+              $dt->tipoexame_exa == 1 ? $tipoexame = '<strong>MORMO</strong>' : $tipoexame = '<strong>AIE</strong>';
 
               $array = array(
                   $contador,
-                  $dt->numeroexame_exa,
+                  $dt->numeroexame_exa . ' - ' . $tipoexame,
+                  $dt->nome_vet,
                   $dt->nome_prop,
                   $dt->nome_ani,
                   $dt->registro_ani,

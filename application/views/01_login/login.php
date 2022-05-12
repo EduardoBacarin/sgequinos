@@ -16,7 +16,8 @@
 <div class="login-box">
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <a href="#" class="h1"><b>SG</b>Equinos</a>
+      <!-- <a href="#" class="h1"><b>SG</b>Equinos</a> -->
+      <img src="<?= base_url('assets/svg/logo_full.svg')?>" style="width: 80%;">
     </div>
     <div class="card-body">
       <p class="login-box-msg">Cadastre-se para acessar nossos serviços</p>

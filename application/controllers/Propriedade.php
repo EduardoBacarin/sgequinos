@@ -68,6 +68,8 @@ class Propriedade extends CI_Controller{
         'numero_pro'         => $post['numero_pro'],
         'cidade_pro'         => $post['cidade_pro'],
         'estadouf_pro'       => $post['estadouf_pro'],
+        'latitude_pro'       => $post['latitude_pro'],
+        'longitude_pro'      => $post['longitude_pro'],
         'observacao_pro'     => $post['observacao_pro'],
       ];
       $inserePropriedade = $this->propriedades_model->insert_propriedade($dados);

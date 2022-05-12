@@ -41,8 +41,9 @@
                 <tbody>
                   <?php
                   $contador = 0;
-                  foreach ($propriedades as $pro){ 
-                  $contador++
+                  if (!empty($propriedades)){
+                    foreach ($propriedades as $pro){ 
+                    $contador++
                   ?>
                     <tr>
                       <td><?= $contador ?></td>
@@ -51,6 +52,8 @@
                       <td><?=$pro->qtdequinos_pro?></td>
                       <td><?=$pro->logradouro_pro . ', ' . $pro->numero_pro?></td>
                       <td><?=$pro->cidade_pro . ' - ' . $pro->estadouf_pro?></td>
+                    <?php } } else{ ?>
+                      <td colspan="6" style="text-align: center">Nenhuma propriedade encontrada.</td>
                     <?php } ?>
                   </tr>
                 </tbody>

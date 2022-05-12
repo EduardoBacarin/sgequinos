@@ -79,6 +79,8 @@ class Animal extends CI_Controller{
         'especie_ani'            => $post['especie_ani'],
         'raca_ani'               => $post['raca_ani'],
         'sexo_ani'               => $post['sexo_ani'],
+        'pelagem_ani'            => $post['pelagem_ani'],
+        'estgestacional_ani'     => $post['estgestacional_ani'],
         'idade_ani'              => $post['idade_ani'],
         'classificacao_ani'      => $post['select_classificacao'],
         'outraclassificacao_ani' => (!empty($post['outraclassificacao_ani']) ? $post['outraclassificacao_ani'] : ''),

@@ -45,9 +45,10 @@
                 </thead>
                 <tbody>
                   <?php
-                  $contador = 0;
-                  foreach ($animais as $ani){ 
-                  $contador++
+                  if (!empty($animais)){
+                    $contador = 0;
+                    foreach ($animais as $ani){ 
+                    $contador++
                   ?>
                   <tr>
                       <td><?= $contador ?></td>
@@ -68,6 +69,8 @@
                         </div>
                       </td>
                     </tr>
+                  <?php }}else{?>
+                    <td colspan="8" style="text-align: center">Nenhum animal encontrado!</td>
                   <?php } ?>
                 </tbody>
               </table>

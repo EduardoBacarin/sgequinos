@@ -29,10 +29,20 @@
               <input type="hidden" id="codigo_exame" value="0">
               <div class="card-body">
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-md-3">
                     <div class="form-group">
-                      <label for="numeroexame_exa">Número do Exame</label>
-                      <input type="number" class="form-control" id="numeroexame_exa" name="numeroexame_exa" placeholder="Número do Exame">
+                      <label for="tipoexame_exa">Tipo do Exame</label>
+                      <select class="form-control" id="tipoexame_exa" name="tipoexame_exa">
+                        <option value="1" selected>MORMO</option>
+                        <option value="2">AIE</option>
+                        <option value="3">MORMO + AIE</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="datacoleta_exa">Data da Coleta</label>
+                      <input type="date" class="form-control" id="datacoleta_exa" name="datacoleta_exa" placeholder="Data da Coleta">
                     </div>
                   </div>
                 </div>
@@ -246,6 +256,21 @@
                 </div>
               </div>
               <div class="row">
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="pelagem_ani">Pelagem</label>
+                    <input type="text" class="form-control" id="pelagem_ani" name="pelagem_ani" placeholder="Pelagem">
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="estgestacional_ani">Estado Gestacional</label>
+                    <select class="form-control" id="estgestacional_ani" name="estgestacional_ani">
+                      <option value="1" selected>NÃO</option>
+                      <option value="2">SIM</option>
+                    </select>
+                  </div>
+                </div>
                 <div class="col-md-1">
                   <div class="form-group">
                     <label for="sexo_ani">Sexo</label>
@@ -255,13 +280,13 @@
                     </select>
                   </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-1">
                   <div class="form-group">
                     <label for="idade_ani">Idade</label>
                     <input type="text" class="form-control" id="idade_ani" name="idade_ani" placeholder="Idade">
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                   <div class="form-group">
                     <label for="select_propriedade">Selecione a Propriedade</label>
                     <select class="form-control" id="select_propriedade" name="select_propriedade" disabled>
@@ -271,12 +296,12 @@
                 </div>
                 <div class="col-md-1">
                   <div class="form-group">
-                    <button type="button" class="btn btn-primary mt-4" data-toggle="modal" data-target="#modal-cadastro-propriedade">
+                    <button type="button" class="btn btn-primary" style="margin-left: -10px; margin-top: 32px;" data-toggle="modal" data-target="#modal-cadastro-propriedade">
                       <i class="fa-solid fa-plus" data-toggle="tooltip" data-placement="top" title='Cadastre aqui uma propriedade.'></i>
                     </button>
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                   <div class="form-group">
                     <label for="cidade_ani">Cidade</label>
                     <input type="text" class="form-control" id="cidade_ani" name="cidade_ani" placeholder="Cidade" readonly>
@@ -424,6 +449,20 @@
                 <div class="form-group">
                   <label for="observacao_pro">Observações</label>
                   <textarea class="form-control" name="observacao_pro" placeholder="Observações sobre a propriedade" rows="6" maxlength="1000"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="latitude_pro">Latitude</label>
+                  <input type="text" class="form-control" id="latitude_pro" name="latitude_pro" placeholder="Latitude">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="longitude_pro">Longitude</label>
+                  <input type="text" class="form-control" id="longitude_pro" name="longitude_pro" placeholder="Longitude">
                 </div>
               </div>
             </div>

@@ -15,6 +15,7 @@ $(document).ready(function () {
         setTimeout(function(){
             $('#select_proprietarios').trigger('change');
         }, 500);
+        
     }
 
     $('#select_proprietarios').on('change', function () {
@@ -49,10 +50,13 @@ $(document).ready(function () {
                                         .append('<option value="0" selected>Selecione uma Propriedade</option>')
                                         .val(0);
                                     $(data.dados).each(function (index, element) {
-                                        $('#select_propriedade').append(`<option value="${element.codigo_pro}" data-cidade="${element.cidade_pro}" data-estado="${element.estadouf_pro}">
+        var codigo_pro = $('#codigo_propriedade').val();
+                                        $('#select_propriedade').append(`<option value="${element.codigo_pro}" data-cidade="${element.cidade_pro}" data-estado="${element.estadouf_pro}" ${element.codigo_pro == $('#codigo_propriedade').val() ? 'selected' : ''}>
                                         ${element.nome_pro}
                                     </option>`);
                                     });
+                                    $('#select_propriedade').trigger('change');
+                                
                                 } else {
                                     $('#select_propriedade')
                                         .find('option')
@@ -191,10 +195,10 @@ $(document).ready(function () {
             contentType: false,
             processData: false,
             success: function (data) {
-                if (data.retorno == false) {
-                    window.location.href = 'http://localhost/sgequinos/exame';
+                if (data.retorno) {
+                    window.location.href = 'http://localhost/sgequinos/animal';
                 } else {
-                    erro('Erro ao salvar o exame, verifique todos os dados e tente novamente');
+                    erro('Erro ao cadastrar o animal, verifique todos os dados e tente novamente');
                 }
             }
         });
