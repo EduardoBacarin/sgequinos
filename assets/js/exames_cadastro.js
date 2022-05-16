@@ -216,7 +216,7 @@ $(document).ready(function () {
                         $('#cidade_ani').val(data.dados['cidade_pro']);
                         $('#estado_ani').val(data.dados['estadouf_pro']);
                         var img = new Image();
-                        img.onload = function() {
+                        img.onload = function () {
                             var f_img = new fabric.Image(img);
                             canvas.setBackgroundImage(f_img);
                             canvas.renderAll();

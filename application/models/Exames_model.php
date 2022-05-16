@@ -120,6 +120,7 @@ class Exames_model extends CI_Model {
 		$this->db->from("exame");
 		$this->db->join('proprietario', 'exame.codigo_prop = proprietario.codigo_prop');
 		$this->db->join('laboratorio', 'exame.codigo_lab = laboratorio.codigo_lab');
+		$this->db->join('veterinario', 'exame.codigo_vet = veterinario.codigo_vet');
 		$this->db->join('animal', 'exame.codigo_ani = animal.codigo_ani');
 		$this->db->join('propriedade', 'animal.codigo_pro = propriedade.codigo_pro');
 		$this->db->where("exame.codigo_exa", $codigo_exa);

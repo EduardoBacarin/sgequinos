@@ -1,6 +1,8 @@
 var base_url = $("#base_url").val();
 
 var canvas = new fabric.Canvas('resenha');
+canvas.setHeight(550);
+canvas.setWidth(1080);
 
 var img = new Image();
 img.onload = function() {

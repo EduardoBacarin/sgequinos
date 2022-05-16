@@ -12519,13 +12519,13 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
   float: left;
   line-height: .8;
   margin-top: -.1rem;
-  max-height: 33px;
+  max-height: 50px;
   width: auto;
 }
 
 .brand-link .brand-image-xl {
   line-height: .8;
-  max-height: 40px;
+  max-height: 45px;
   width: auto;
 }
 

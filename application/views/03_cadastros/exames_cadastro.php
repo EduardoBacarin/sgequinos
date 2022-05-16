@@ -348,8 +348,8 @@
             </div>
             <div class="card-body">
               <div class="row">
-                <div class="col-md-10" id="divDesenho">
-                  <canvas id="resenha" width="1080" height="550" style="border:1px solid;"></canvas>
+                <div class="col-md-12" id="divDesenho">
+                  <canvas id="resenha" class="resenha" style="border:1px solid;"></canvas>
                 </div>
               </div>
               <div class="row">

@@ -16,4 +16,5 @@ $(document).ready(function () {
       { "width": "10%", "name": "Cidade/Estado"}
     ],
   });
+  $('#navmain-cadastros').Treeview({expandSidebar: true})
 });

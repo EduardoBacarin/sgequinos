@@ -25,6 +25,8 @@
 <script src="<?= base_url('assets/js/funcoes.js') ?>"></script>
 <script src="<?= base_url('assets/plugins/formValidation/framework/bootstrap.min.js') ?>"></script>
 <script src="<?= base_url('assets/plugins/jquery.countdown-2.1.0/jquery.countdown.js') ?>"></script>
+<script src="<?= base_url('assets/plugins/momentjs/moment.min.js') ?>"></script>
+<script src="<?= base_url('assets/plugins/momentjs/moment-with-locales.min.js') ?>"></script>
 
 <?php
 if (!empty($js_link)) {

@@ -1,4 +1,5 @@
 var base_url = $("#base_url").val();
+$('#navmain-cadastros').addClass('menu-open');
 
 $(document).ready(function () {
     $('#tabela-proprietarios').DataTable({

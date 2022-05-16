@@ -336,4 +336,12 @@ class Exame extends CI_Controller{
       }
     }
   }
+
+  public function finalizar_exame(){
+    $post = $this->input->post();
+    echo json_encode($post);exit;
+    if (!empty($post)) {
+
+    }
+  }
 }
