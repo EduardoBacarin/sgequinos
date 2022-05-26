@@ -28,6 +28,15 @@ class Exames_model extends CI_Model {
 		}
 	}
 
+	public function insert_resultado($dados) {
+		$this->db->insert("resultado_exame", $dados);
+		if ($this->db->insert_id() >= 1) {
+			return $this->db->insert_id();
+		} else {
+			return false;
+		}
+	}
+
 	public function busca_numero_exame($numero_exame, $codigo_vet){
 		$this->db->select("*");
 		$this->db->from("exame");
@@ -51,6 +60,7 @@ class Exames_model extends CI_Model {
 		$this->db->join('veterinario', 'exame.codigo_vet = veterinario.codigo_vet');
 		$this->db->join('proprietario', 'exame.codigo_prop = proprietario.codigo_prop');
 		$this->db->join('animal', 'exame.codigo_ani = animal.codigo_ani');
+		$this->db->join('resultado_exame', 'resultado_exame.codigo_exa = exame.codigo_exa', 'left');
 		$this->db->where("exame.codigo_vet", $codigo_vet);
 		$this->db->where("exame.ativo_exa", true);
 		$query = $this->db->get();
@@ -85,6 +95,7 @@ class Exames_model extends CI_Model {
 		$this->db->join('proprietario', 'exame.codigo_prop = proprietario.codigo_prop');
 		$this->db->join('animal', 'exame.codigo_ani = animal.codigo_ani');
 		$this->db->join('veterinario', 'exame.codigo_vet = veterinario.codigo_vet');
+		$this->db->join('resultado_exame', 'resultado_exame.codigo_exa = exame.codigo_exa', 'left');
 		$this->db->where("exame.codigo_lab", $codigo_lab);
 		$this->db->where("exame.ativo_exa", true);
         $this->db->order_by("exame.codigo_exa", "DESC");
@@ -184,6 +195,20 @@ class Exames_model extends CI_Model {
         $this->db->set('inicioanalise_exa', $datahoje->format('Y-m-d H:i:s'));
         $this->db->set('fimanalise_exa', $data2dias->format('Y-m-d H:i:s'));
 
+        $this->db->where("codigo_exa", $codigo_exa);
+
+        if ($this->db->update("exame")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+	public function finalizar_exame($codigo_exa){
+		date_default_timezone_set('America/Sao_Paulo');
+
+
+        $this->db->set('status_exa', 5);
         $this->db->where("codigo_exa", $codigo_exa);
 
         if ($this->db->update("exame")) {

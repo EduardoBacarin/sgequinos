@@ -230,6 +230,11 @@
         <form id="formModalFinalizarExame" novalidate="novalidate" enctype="multipart/form-data">
           <input type="hidden" id="codigo_exa_finaliza" name="codigo_exa" value="0">
           <input type="hidden" id="tipo_exame" name="tipo_exame" value="0">
+          <input type="hidden" id="codigo_pro" name="codigo_pro" value="0">
+          <input type="hidden" id="codigo_prop" name="codigo_prop" value="0">
+          <input type="hidden" id="codigo_ani" name="codigo_ani" value="0">
+          <input type="hidden" id="codigo_ant" name="codigo_ant" value="0">
+          <input type="hidden" id="codigo_vet" name="codigo_vet" value="0">
           <div class="card-body">
             <div class="accordion" id="accordionProprietario">
               <div class="row">
@@ -494,64 +499,104 @@
             <div class="row divMORMO">
               <div class="col-md-12">
                 <hr>
-                <h5>KIT ELISA MORMO</h5>
+                <h5>ANÁLISE MORMO</h5>
+              </div>
+            </div>
+            <div class="row divMORMO">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="metodo_mormo">Método</label>
+                  <select class="form-control" id="metodo_mormo" name="metodo_mormo">
+                    <option value="1" selected>FC</option>
+                    <option value="2">ELISA</option>
+                    <option value="3">IDGA</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="select_antigenos_mormo">Antígeno</label>
+                  <select class="form-control select_antigenos" id="select_antigenos_mormo" name="select_antigenos_mormo">
+                    <option value="" selected>Selecione o Antígeno</option>
+                  </select>
+                </div>
               </div>
             </div>
             <div class="row divMORMO">
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="nomecomercial_mormo">Nome Comercial: </label>
-                  <input type="text" class="form-control" id="nomecomercial_mormo" name="nomecomercial_mormo" placeholder="Nome Comercial">
+                  <input type="text" class="form-control" id="nomecomercial_mormo" name="nomecomercial_mormo" placeholder="Nome Comercial" readonly>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="fabricante_mormo">Fabricante: </label>
-                  <input type="text" class="form-control" id="fabricante_mormo" name="fabricante_mormo" placeholder="Fabricante">
+                  <input type="text" class="form-control" id="fabricante_mormo" name="fabricante_mormo" placeholder="Fabricante" readonly>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="partidalote_mormo">Partida/Lote: </label>
-                  <input type="text" class="form-control" id="partidalote_mormo" name="partidalote_mormo" placeholder="Partida/Lote">
+                  <input type="text" class="form-control" id="partidalote_mormo" name="partidalote_mormo" placeholder="Partida/Lote" readonly>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="kitvalidade_mormo">Validade: </label>
-                  <input type="date" class="form-control" id="kitvalidade_mormo" name="kitvalidade_mormo" placeholder="DD/MM/YYYY">
+                  <input type="date" class="form-control" id="kitvalidade_mormo" name="kitvalidade_mormo" placeholder="DD/MM/YYYY" readonly>
                 </div>
               </div>
             </div>
             <div class="row divAIE" style="display: none;">
               <div class="col-md-12">
                 <hr>
-                <h5>KIT IDGA AIE</h5>
+                <h5>ANÁLISE AIE</h5>
+              </div>
+            </div>
+            <div class="row divAIE">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="metodo_aie">Método</label>
+                  <select class="form-control" id="metodo_aie" name="metodo_aie">
+                    <option value="1" selected>FC</option>
+                    <option value="2">ELISA</option>
+                    <option value="3">IDGA</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="select_antigenos_aie">Antígeno</label>
+                  <select class="form-control select_antigenos" id="select_antigenos_aie" name="select_antigenos_aie">
+                    <option value="" selected>Selecione o Antígeno</option>
+                  </select>
+                </div>
               </div>
             </div>
             <div class="row divAIE" style="display: none;">
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="nomecomercial_aie">Nome Comercial: </label>
-                  <input type="text" class="form-control" id="nomecomercial_aie" name="nomecomercial_aie" placeholder="Nome Comercial">
+                  <input type="text" class="form-control" id="nomecomercial_aie" name="nomecomercial_aie" placeholder="Nome Comercial" readonly>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="fabricante_aie">Fabricante: </label>
-                  <input type="text" class="form-control" id="fabricante_aie" name="fabricante_aie" placeholder="Fabricante">
+                  <input type="text" class="form-control" id="fabricante_aie" name="fabricante_aie" placeholder="Fabricante" readonly>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="partidalote_aie">Partida/Lote: </label>
-                  <input type="text" class="form-control" id="partidalote_aie" name="partidalote_aie" placeholder="Partida/Lote">
+                  <input type="text" class="form-control" id="partidalote_aie" name="partidalote_aie" placeholder="Partida/Lote" readonly>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="kitvalidade_aie">Validade: </label>
-                  <input type="date" class="form-control" id="kitvalidade_aie" name="kitvalidade_aie" placeholder="DD/MM/YYYY">
+                  <input type="date" class="form-control" id="kitvalidade_aie" name="kitvalidade_aie" placeholder="DD/MM/YYYY" readonly>
                 </div>
               </div>
             </div>
@@ -565,14 +610,14 @@
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="tipoexame_exa_resultado_mormo">Exame: </label>
-                  <input type="text" class="form-control" id="tipoexame_exa_resultado_mormo" name="tipoexame_exa_resultado_mormo" placeholder="Exame">
+                  <input type="text" class="form-control" id="tipoexame_exa_resultado_mormo" name="tipoexame_exa_resultado_mormo" placeholder="Exame" disabled>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="resultado_mormo">Resultado: </label>
                   <select name="resultado_mormo" class="form-control" id="resultado_mormo">
-                    <option value="0" selected>Selecione o Resultado</option>
+                    <option value="" selected>Selecione o Resultado</option>
                     <option value="1">Negativo</option>
                     <option value="2">Positivo</option>
                   </select>
@@ -586,8 +631,8 @@
               </div>
               <div class="col-md-3">
                 <div class="form-group">
-                  <label for="observacao">Observação: </label>
-                  <input type="text" class="form-control" id="observacao" name="observacao" placeholder="Observacao">
+                  <label for="observacao_mormo">Observação: </label>
+                  <input type="text" class="form-control" id="observacao_mormo" name="observacao_mormo" placeholder="Observação">
                 </div>
               </div>
             </div>
@@ -595,14 +640,14 @@
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="tipoexame_exa_resultado_aie">Exame: </label>
-                  <input type="text" class="form-control" id="tipoexame_exa_resultado_aie" name="tipoexame_exa_resultado_aie" placeholder="Exame">
+                  <input type="text" class="form-control" id="tipoexame_exa_resultado_aie" name="tipoexame_exa_resultado_aie" placeholder="Exame" disabled>
                 </div>
               </div>
               <div class="col-md-3 divAIE">
                 <div class="form-group">
                   <label for="resultado_aie">Resultado: </label>
                   <select name="resultado_aie" class="form-control" id="resultado_aie">
-                    <option value="0" selected>Selecione o Resultado</option>
+                    <option value="" selected>Selecione o Resultado</option>
                     <option value="1">Negativo</option>
                     <option value="2">Positivo</option>
                   </select>
@@ -616,8 +661,8 @@
               </div>
               <div class="col-md-3">
                 <div class="form-group">
-                  <label for="observacao_res">Observação: </label>
-                  <input type="text" class="form-control" id="observacao_res" name="observacao_res" placeholder="Observacao">
+                  <label for="observacao_aie">Observação: </label>
+                  <input type="text" class="form-control" id="observacao_aie" name="observacao_aie" placeholder="Observação">
                 </div>
               </div>
             </div>

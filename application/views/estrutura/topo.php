@@ -130,6 +130,14 @@
                     <p>Exames</p>
                   </a>
                 </li>
+                <?php if ($this->session->userdata('usuario')['tipo_user'] == 2) { ?>
+                <li class="nav-item">
+                  <a href="<?= base_url('antigeno') ?>" class="nav-link" id="nav-antigenos">
+                  <i class="fa-solid fa-vial-virus nav-icon"></i>
+                    <p>Antígenos</p>
+                  </a>
+                </li>
+                <?php } ?>
               </ul>
             </li>
           </ul>

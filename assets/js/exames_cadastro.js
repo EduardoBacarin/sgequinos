@@ -126,7 +126,7 @@ $(document).ready(function () {
                             }
                         });
 
-                        /* BUSCA OS ANIMASI CADASTRADOS NO PROPRIETÁRIO */
+                        /* BUSCA OS ANIMAIS CADASTRADOS NO PROPRIETÁRIO */
                         $.ajax({
                             url: base_url + 'proprietario/busca_animais_prop',
                             type: 'POST',

@@ -58,6 +58,8 @@ $(document).ready(function () {
             return ' <i class="fa-solid fa-circle-check" style="color: green;"></i> Aprovado';
           } else if (data == 4) {
             return '<i class="fa-solid fa-ban" style="color: red;"></i> Reprovado';
+          } else if (data == 5) {
+            return '<i class="fa-solid fa-circle-check" style="color: green;"></i> Finalizado';
           }
         }
       },
@@ -238,7 +240,6 @@ $(document).ready(function () {
       success: function (data) {
         if (data.retorno) {
           var info = data.dados;
-          console.log(info);
           switch (info.estgestacional_ani) {
             case '1':
               var estado_gestacional = "NÃO";
@@ -253,15 +254,91 @@ $(document).ready(function () {
               $('.divAIE').hide();
               $('.divMORMO').show();
               $('#tipoexame_exa_resultado_mormo').val(tipoexame);
+
+              $.ajax({
+                url: base_url + 'antigeno/select_antigenos/' + parseInt(info.tipoexame_exa),
+                type: 'POST',
+                dataType: 'json',
+                success: function (data) {
+
+                  if (data.retorno) {
+                    /* ADICIONA OS ANIMAIS NO SELECT OPTION */
+                    $('#select_antigenos_mormo').prop('readonly', false);
+                    $('#select_antigenos_mormo')
+                      .find('option')
+                      .remove()
+                      .end()
+                      .append('<option value="" selected>Selecione um antígeno</option>')
+                      .val(0);
+                    $(data.dados).each(function (index, element) {
+                      $('#select_antigenos_mormo').append(`<option value="${element.codigo_ant}">
+                               ${element.nome_ant} - ${element.fabricante_ant} - Lote: ${element.lote_ant} - Vencimento: ${moment(element.vencimento_ant).format('DD/MM/YYYY')}
+                          </option>`);
+                    });
+                  } else {
+                    $('#select_antigenos_mormo')
+                      .find('option')
+                      .remove()
+                      .end()
+                      .append('<option value="" selected>Cadastre um Antígeno</option>')
+                      .val(0);
+                    // $('#select_animal').find("option:first").text('Complete os dados do animal').val(0).prop('selected', true)
+                    aviso('Não foi encontrado nenhum antígeno cadastrado');
+                  }
+                },
+                error: function () {
+                  erro('Erro na busca dos animais do proprietário');
+                }
+              });
               break;
             case '2':
               var tipoexame = "AIE";
               $('.divAIE').show();
               $('.divMORMO').hide();
               $('#tipoexame_exa_resultado_aie').val(tipoexame);
+
+              $.ajax({
+                url: base_url + 'antigeno/select_antigenos/' + parseInt(info.tipoexame_exa),
+                type: 'POST',
+                dataType: 'json',
+                success: function (data) {
+
+                  if (data.retorno) {
+                    /* ADICIONA OS ANIMAIS NO SELECT OPTION */
+                    $('#select_antigenos_aie').prop('readonly', false);
+                    $('#select_antigenos_aie')
+                      .find('option')
+                      .remove()
+                      .end()
+                      .append('<option value="" selected>Selecione um antígeno</option>')
+                      .val(0);
+                    $(data.dados).each(function (index, element) {
+                      $('#select_antigenos_aie').append(`<option value="${element.codigo_ant}">
+                               ${element.nome_ant} - ${element.fabricante_ant} - Lote: ${element.lote_ant} - Vencimento: ${moment(element.vencimento_ant).format('DD/MM/YYYY')}
+                          </option>`);
+                    });
+                  } else {
+                    $('#select_antigenos_aie')
+                      .find('option')
+                      .remove()
+                      .end()
+                      .append('<option value="" selected>Cadastre um Antígeno</option>')
+                      .val(0);
+                    // $('#select_animal').find("option:first").text('Complete os dados do animal').val(0).prop('selected', true)
+                    aviso('Não foi encontrado nenhum antígeno cadastrado');
+                  }
+                },
+                error: function () {
+                  erro('Erro na busca dos animais do proprietário');
+                }
+              });
               break;
           }
-
+          /* INPUT HIDDEN */
+          $('#codigo_pro').val(info.codigo_pro);
+          $('#codigo_prop').val(info.codigo_prop);
+          $('#codigo_ani').val(info.codigo_ani);
+          $('#codigo_vet').val(info.codigo_vet);
           /* DADOS PROPRIETÁRIO */
           $('#nome_proprietario').val(info.nome_prop);
           $('#documento_proprietario').val(info.documento_prop);
@@ -299,6 +376,7 @@ $(document).ready(function () {
           $('#tipoexame_exa').val(tipoexame);
           $('#datacoleta_exa').val(info.datacoleta_exa).attr('disabled', true);
           $('#datarecepcao_exa').val(moment(info.datarecepcao_exa).format("YYYY-MM-DD")).attr('disabled', true);
+
         } else {
           error('Exame não encontrado, atualize a página e tente novamente.')
         }
@@ -464,13 +542,46 @@ $(document).ready(function () {
         processData: false,
         success: function (data) {
           if (data.retorno) {
-
+            $('#modal-finaliza-exame').modal('hide');
+            sucesso(data.msg);
           } else {
-
+            sucesso(data.msg);
           }
         }
       });
     });
+
+  $(document).on('change', '.select_antigenos', function () {
+    var codigo_ant = $(this).val();
+    $.ajax({
+      url: base_url + 'antigeno/busca_antigeno',
+      type: 'POST',
+      data: {
+        codigo_ant: codigo_ant
+      },
+      dataType: 'json',
+      success: function (data) {
+        if (data.retorno) {
+          if (data.dados.tipo_ant == 1){
+            $('#codigo_ant').val(codigo_ant);
+            $('#nomecomercial_mormo').val(data.dados.nome_ant);
+            $('#fabricante_mormo').val(data.dados.fabricante_ant);
+            $('#partidalote_mormo').val(data.dados.lote_ant);
+            $('#kitvalidade_mormo').val(data.dados.vencimento_ant);
+          }else{
+            $('#codigo_ant').val(codigo_ant);
+            $('#nomecomercial_aie').val(data.dados.nome_ant);
+            $('#fabricante_aie').val(data.dados.fabricante_ant);
+            $('#partidalote_aie').val(data.dados.lote_ant);
+            $('#kitvalidade_aie').val(data.dados.vencimento_ant);
+          }
+          sucesso(data.msg);
+        } else {
+          error('Exame não encontrado, atualize a página e tente novamente.')
+        }
+      }
+    });
+  });
 
   $('#modal-finaliza-exame').on('hidden.bs.modal', function () {
     limpa_finaliza_exame();
@@ -478,6 +589,13 @@ $(document).ready(function () {
 });
 
 function limpa_finaliza_exame() {
+  /* INPUT HIDDEN */
+  $('#codigo_pro').val('');
+  $('#codigo_prop').val('');
+  $('#codigo_ant').val('');
+  $('#codigo_ani').val('');
+  $('#codigo_vet').val('');
+
   /* DADOS PROPRIETÁRIO */
   $('#nome_proprietario').val('');
   $('#documento_proprietario').val('');
