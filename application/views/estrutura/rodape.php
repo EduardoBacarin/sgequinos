@@ -15,9 +15,11 @@
 <!-- ./wrapper -->
 
 <script src="<?= base_url('assets')?>/plugins/jquery/jquery.min.js"></script>
+<script src="<?= base_url('assets/plugins/jquery-mask/dist/jquery.mask.min.js') ?>"></script>
 <script src="<?= base_url('assets')?>/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url('assets')?>/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <script src="<?= base_url('assets')?>/js/adminlte.min.js"></script>
+<script src="<?= base_url('assets')?>/js/mascaras.js"></script>
 <script src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="<?= base_url('assets/plugins/formValidation/formValidation.min.js') ?>"></script>

@@ -52,7 +52,7 @@
       <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link" href="<?= base_url('#') ?>" role="button">
+          <a class="nav-link" href="<?= base_url('usuario') ?>" role="button">
             <i class="fa-solid fa-user mr-2"></i>
             <?= $this->session->userdata('usuario')['nome_user']; ?>
           </a>

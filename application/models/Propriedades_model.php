@@ -28,6 +28,39 @@ class Propriedades_model extends CI_Model {
 		}
 	}
 
+	public function listar_propriedades($codigo_vet, $limit, $offset){
+		$this->db->select("propriedade.*, proprietario.nome_prop");
+		$this->db->from("propriedade");
+		$this->db->join("proprietario", "proprietario.codigo_prop = propriedade.codigo_prop", 'inner');
+		$this->db->where("propriedade.codigo_vet", $codigo_vet);
+		$this->db->where("propriedade.ativo_pro", true);
+        $this->db->order_by("propriedade.nome_pro", "ASC");
+        $this->db->order_by("propriedade.codigo_pro", "ASC");
+        $this->db->limit($limit, $offset);
+		$query = $this->db->get();
+		// print_r($this->db->last_query());exit;
+		
+		if ($query->num_rows() >= 1) {
+			return $query->result();
+		} else {
+			return false;
+		}
+	}
+
+	public function conta_propriedades($codigo_vet){
+		$this->db->select("COUNT(codigo_pro)");
+		$this->db->from("propriedade");
+		$this->db->where("propriedade.codigo_vet", $codigo_vet);
+		$this->db->where("propriedade.ativo_pro", true);
+		$total = $this->db->count_all_results();
+		
+		if ($this->db->count_all_results() >= 1) {
+			return $total;
+		} else {
+			return 0;
+		}
+	}
+
 	public function lista_propriedades($codigo_vet){
 		$this->db->select("*");
 		$this->db->from("propriedade");

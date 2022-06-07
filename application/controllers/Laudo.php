@@ -17,7 +17,7 @@ class Laudo extends CI_Controller{
     }
   }
 
-  public function index($numero_exame, $formato = 'web'){
+  public function index($identificador, $formato = 'web'){
     $this->load->model('laudo_model');
     $topo['css_link'] = array(
       '//cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css'
@@ -27,11 +27,21 @@ class Laudo extends CI_Controller{
         'assets/js/laboratorio.js' . V,
     );
 
-    $exame = $this->laudo_model->buscar_exame($numero_exame)[0];
+    $exame = $this->laudo_model->buscar_exame($identificador)[0];
     // echo json_encode($exame);exit;
+    switch($exame->tiporequisicao_exa){
+      case 1: $tipo_requisicao = 'MORMO';break;
+      case 2: $tipo_requisicao = 'ANEMIA INFECCIOSA EQUINA';break;
+      case 3: $tipo_requisicao = 'MORMO E ANEMIA INFECCIOSA EQUINA';break;
+    }
+
+    $iniciais_vet = explode(' ',$exame->nome_vet);
+    $iniciais_vet = substr($iniciais_vet[array_key_first($iniciais_vet)], 0, 1) . substr($iniciais_vet[count($iniciais_vet)-1], 0, 1);
+
+    $data['tipo_requisicao'] = $tipo_requisicao;
     $data['nome_laboratorio'] = $exame->nome_lab;
     $data['portaria_credenciamento'] = $exame->portariacredenciamento_lab;
-    $data['numero_exame'] = $exame->numeroexame_exa;
+    $data['numero_exame'] = $iniciais_vet . ' ' . $exame->numeroexame_exa;
     $data['endereco_laboratorio'] = $exame->rua_lab . ', ' . $exame->bairro_lab  . ', ' . $exame->numero_lab;
     $data['cidadeuf_laboratorio'] = $exame->cidade_lab . ' / ' . $exame->estadouf_lab;
     $data['email_laboratorio'] = $exame->email_lab;
@@ -42,7 +52,8 @@ class Laudo extends CI_Controller{
     $data['telefone_proprietario'] = $exame->telefone_prop;
 
     $data['nome_veterinario'] = $exame->nome_vet;
-    $data['telefone_eterinario'] = $exame->telefone_vet;
+    $data['telefone_veterinario'] = $exame->telefone_vet;
+    $data['endereco_veterinario'] = $exame->logradouro_vet . ', ' . $exame->bairro_vet . ', ' . $exame->numero_vet . ' - ' . $exame->cidade_vet . '/' . $exame->estadouf_vet;
 
     $data['nome_animal'] = $exame->nome_ani;
     $data['registro_animal'] = $exame->registro_ani;

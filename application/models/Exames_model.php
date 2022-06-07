@@ -55,7 +55,7 @@ class Exames_model extends CI_Model {
 	}
 
 	public function lista_exames_vet($codigo_vet){
-		$this->db->select("*");
+		$this->db->select("exame.*, veterinario.*, proprietario.*, animal.*, resultado_exame.codigo_res");
 		$this->db->from("exame");
 		$this->db->join('veterinario', 'exame.codigo_vet = veterinario.codigo_vet');
 		$this->db->join('proprietario', 'exame.codigo_prop = proprietario.codigo_prop');
@@ -90,7 +90,7 @@ class Exames_model extends CI_Model {
 	}
 
 	public function lista_exames_lab($codigo_lab, $limit, $offset){
-		$this->db->select("*");
+		$this->db->select("exame.*, veterinario.*, proprietario.*, animal.*, resultado_exame.codigo_res");
 		$this->db->from("exame");
 		$this->db->join('proprietario', 'exame.codigo_prop = proprietario.codigo_prop');
 		$this->db->join('animal', 'exame.codigo_ani = animal.codigo_ani');

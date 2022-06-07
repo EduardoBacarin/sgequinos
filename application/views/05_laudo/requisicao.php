@@ -37,6 +37,8 @@
           border-color: black;
           border-width: 2px;
           border-style: solid;
+          padding-left: 5px;
+          padding-right: 5px;
         }
 
         .btn-primary {
@@ -80,7 +82,7 @@
       <thead>
         <tr>
           <td width="100%" colspan="3" style="text-align: center; font-weight: bold; height:30px; vertical-align: middle;">
-            REQUISIÇÃO E RESULTADO DE DIAGNÓSTICO DE ANEMIA INFECCIOSA EQUINA
+            REQUISIÇÃO DE DIAGNÓSTICO DE <?= $tipo_requisicao ?>
           </td>
         </tr>
       </thead>
@@ -108,8 +110,8 @@
         <!-- DADOS DO VETERINÁRIO -->
         <tr>
           <td width="30%">Nome do Veterinário: <br> <?=$nome_veterinario?></td>
-          <td width="30%">Endereço: <br> <?=$telefone_eterinario?></td>
-          <td width="30%">Telefone: <br> COLOCAR PAR ASALVAR NO BANCO O TELEFONE</td>
+          <td width="30%">Endereço: <br> <?=$endereco_veterinario?></td>
+          <td width="30%">Telefone: <br> <?=$telefone_veterinario?></td>
         </tr>
       </tbody>
     </table>

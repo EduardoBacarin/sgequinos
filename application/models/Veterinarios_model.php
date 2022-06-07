@@ -47,6 +47,24 @@ class Veterinarios_model extends CI_Model {
 		}
 	}
 
+	public function busca_veterinario($codigo_vet){
+		$this->db->select("*");
+		$this->db->from("veterinario");
+
+		$this->db->where("codigo_vet", $codigo_vet);
+		$this->db->where("ativo_vet", true);
+		$this->db->limit(1);
+		$query = $this->db->get();
+
+		// print_r($this->db->last_query());exit;
+		
+		if ($query->num_rows() == 1) {
+			return $query->result();
+		} else {
+			return false;
+		}
+	}
+
 	public function lista_veterinarios(){
 		$this->db->select("*");
 		$this->db->from("veterinario");

@@ -28,10 +28,9 @@ class Propriedade extends CI_Controller{
     $rodape['js'] = array(
         'assets/js/propriedades.js' . V,
     );
-    $data['propriedades'] = $this->propriedades_model->lista_propriedades($this->session->userdata('usuario')['codigo_user']);
 
     $this->load->view('estrutura/topo', $topo);
-    $this->load->view('04_listas/propriedades_lista', $data);
+    $this->load->view('04_listas/propriedades_lista');
     $this->load->view('estrutura/rodape', $rodape);
   }
 
@@ -49,6 +48,64 @@ class Propriedade extends CI_Controller{
     $this->load->view('estrutura/topo', $topo);
     $this->load->view('03_cadastros/propriedades_cadastro', $data);
     $this->load->view('estrutura/rodape', $rodape);
+  }
+
+  public function lista_propriedades()
+  {
+    $this->load->model('propriedades_model');
+    $post = $this->input->get();
+
+    if (!empty($post)) {
+      $page   = $post['start'];
+      $limit  = $post['length'];
+      $q      = $post['search']['value'];
+
+      $dados = $this->propriedades_model->listar_propriedades($this->session->userdata('usuario')['codigo_user'], $limit, $page);
+      $total = $this->propriedades_model->conta_propriedades($this->session->userdata('usuario')['codigo_user']);
+
+      if (!empty($dados)) {
+        $total_registros = $total;
+        $retorno_dados = [];
+        $contador = 0;
+        foreach ($dados as $dt) {
+          $contador++;
+
+          $menu = '<div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown">Ações </button>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item item-excluir" data-codigo="' . $dt->codigo_pro . '"> <i class="fa-solid fa-trash-can"></i> Excluir</a>
+                    </div>
+                  </div>';
+          
+          $array = array(
+            $contador,
+            $dt->nome_pro,
+            $dt->nome_prop,
+            $dt->qtdequinos_pro,
+            $dt->logradouro_pro,
+            $dt->cidade_pro . ' - ' . $dt->estadouf_pro,
+            $menu
+          );
+          array_push($retorno_dados, $array);
+        }
+
+        $retorno = array(
+          'recordsTotal' => $total_registros,
+          'recordsFiltered' => $total_registros,
+          'data' => $retorno_dados,
+        );
+
+        echo json_encode($retorno);
+      } else {
+        $retorno = array(
+          'recordsTotal' => 0,
+          'recordsFiltered' => 0,
+          'data' => [],
+        );
+
+        echo json_encode($retorno);
+      }
+    }
   }
 
   public function salvar_propriedade(){

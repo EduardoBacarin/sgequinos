@@ -37,25 +37,9 @@
                   <th>Equinos na Propriedade</th>
                   <th>Endereço</th>
                   <th>Cidade/Estado</th>
+                  <th>Ações</th>
                 </thead>
                 <tbody>
-                  <?php
-                  $contador = 0;
-                  if (!empty($propriedades)){
-                    foreach ($propriedades as $pro){ 
-                    $contador++
-                  ?>
-                    <tr>
-                      <td><?= $contador ?></td>
-                      <td><?=$pro->nome_pro?></td>
-                      <td><?=$pro->nome_prop?></td>
-                      <td><?=$pro->qtdequinos_pro?></td>
-                      <td><?=$pro->logradouro_pro . ', ' . $pro->numero_pro?></td>
-                      <td><?=$pro->cidade_pro . ' - ' . $pro->estadouf_pro?></td>
-                    <?php } } else{ ?>
-                      <td colspan="6" style="text-align: center">Nenhuma propriedade encontrada.</td>
-                    <?php } ?>
-                  </tr>
                 </tbody>
               </table>
             </div>

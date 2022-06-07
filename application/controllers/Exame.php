@@ -93,6 +93,8 @@ class Exame extends CI_Controller
         $numeroexame = str_pad($busca_numero + 1, 5, '0', STR_PAD_LEFT) . '/' . date('Y');
       }
 
+      $identificacao_exa = preg_replace("/[^0-9]/", "", uniqid(rand()));
+
 
       $resenha_base64 = $post['resenha_base64'];
       $caminho_resenha = converte_resenha_base64($resenha_base64, time());
@@ -142,6 +144,7 @@ class Exame extends CI_Controller
       if ($post['tipoexame_exa'] == 3) {
         for ($i = 0; $i < 2; $i++) {
           $dados_exame = [
+            'identificacao_exa'   => $identificacao_exa,
             'codigo_lab'          => $post['codigo_lab'],
             'codigo_prop'         => $post['codigo_prop'],
             'codigo_vet'          => $this->session->userdata('usuario')['codigo_user'],
@@ -158,6 +161,7 @@ class Exame extends CI_Controller
         }
       } else {
         $dados_exame = [
+          'identificacao_exa'   => $identificacao_exa,
           'codigo_lab'          => $post['codigo_lab'],
           'codigo_prop'         => $post['codigo_prop'],
           'codigo_vet'          => $this->session->userdata('usuario')['codigo_user'],
@@ -206,14 +210,14 @@ class Exame extends CI_Controller
         $total_registros = $total;
         $retorno_dados = [];
         $contador = 0;
+
         foreach ($dados as $dt) {
           $contador++;
-
           $menu = '<div class="btn-group">
                         <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown">Ações </button>
                         <div class="dropdown-menu">
                           <a class="dropdown-item item-ver-detalhes" data-codigo="' . $dt->codigo_exa . '"> <i class="fa-solid fa-magnifying-glass text-primary"></i> Ver Detalhes</a>
-                          <a class="dropdown-item item-emanalise-exame" href="' . base_url('requisicao/') . $dt->numeroexame_exa . '" target="_blank"> <i class="fa-solid fa-file-lines"></i> Requisição</a>';
+                          <a class="dropdown-item item-emanalise-exame" href="' . base_url('requisicao/') . $dt->identificacao_exa . '" target="_blank"> <i class="fa-solid fa-file-lines"></i> Requisição</a>';
           if ($this->session->userdata('usuario')['tipo_user'] == 2) {
             if ($dt->status_exa == 1) {
               $menu .= '<a class="dropdown-item item-aprovar-exame" data-codigo="' . $dt->codigo_exa . '"> <i class="fa-solid fa-circle-check text-success"></i> Aprovar</a>
@@ -230,14 +234,14 @@ class Exame extends CI_Controller
               }
             } else if ($dt->status_exa == 4) {
               $menu .= '';
-            }else if($dt->status_exa == 5){
-              $menu .= '<a class="dropdown-item item-emanalise-exame" href="' . base_url('requisicao/') . $dt->numeroexame_exa . '" target="_blank"> <i class="fa-solid fa-file-lines"></i> Laudo</a>';
+            } else if ($dt->status_exa == 5) {
+              $menu .= '<a class="dropdown-item item-emanalise-exame" href="' . base_url('requisicao/') . $dt->identificacao_exa . '" target="_blank"> <i class="fa-solid fa-file-lines"></i> Laudo</a>';
             }
           } else if ($this->session->userdata('usuario')['tipo_user'] == 1) {
             if ($dt->status_exa == 2 || $dt->status_exa == 3 || $dt->status_exa == 4) {
               $menu .= '';
-            }else if($dt->status_exa == 5){
-              $menu .= '<a class="dropdown-item item-emanalise-exame" href="' . base_url('requisicao/') . $dt->numeroexame_exa . '" target="_blank"> <i class="fa-solid fa-file-lines"></i> Laudo</a>';
+            } else if ($dt->status_exa == 5) {
+              $menu .= '<a class="dropdown-item item-emanalise-exame" href="' . base_url('requisicao/') . $dt->identificacao_exa . '" target="_blank"> <i class="fa-solid fa-file-lines"></i> Laudo</a>';
             } else {
               $menu .= '<a class="dropdown-item item-excluir-exame"> <i class="fa-solid fa-trash-can"></i> Excluir</a>';
             }
@@ -357,7 +361,7 @@ class Exame extends CI_Controller
     $this->load->model('exames_model');
     $post = $this->input->post();
     if (!empty($post)) {
-      if (!empty($post['codigo_exa']) && !empty($post['codigo_pro']) && !empty($post['codigo_prop'] && !empty($post['codigo_ani']))){
+      if (!empty($post['codigo_exa']) && !empty($post['codigo_pro']) && !empty($post['codigo_prop'] && !empty($post['codigo_ani']))) {
         $array = [
           'codigo_exa'    => $post['codigo_exa'],
           'codigo_vet'    => $post['codigo_vet'],
@@ -370,14 +374,14 @@ class Exame extends CI_Controller
           'numlacre_res'  => $post['numlacre_res'],
           'tipoexame_res' => $post['tipo_exame'],
         ];
-        if($post['tipo_exame'] == 1){
+        if ($post['tipo_exame'] == 1) {
           $array['metodo_mormo']       =  $post['metodo_mormo'];
           $array['datainicial_mormo']  =  $post['datainicial_mormo'];
           $array['datafinal_mormo']    =  $post['datafinal_mormo'];
           $array['datavalidade_mormo'] =  $post['datavalidade_mormo'];
           $array['resultado_mormo']    =  $post['resultado_mormo'];
           $array['observacao_res']     =  $post['observacao_mormo'];
-        }else if($post['tipo_exame'] == 2){
+        } else if ($post['tipo_exame'] == 2) {
           $array['metodo_aie']       =  $post['metodo_aie'];
           $array['datainicial_aie']  =  $post['datainicial_aie'];
           $array['datafinal_aie']    =  $post['datafinal_aie'];
@@ -387,15 +391,15 @@ class Exame extends CI_Controller
         }
         $insereResultado = $this->exames_model->insert_resultado($array);
         $finalizaExame = $this->exames_model->finalizar_exame($array);
-        if ($insereResultado){
-          echo json_encode(array('retorno' => true, 'msg' => 'Exame finalizado com sucesso!'));        
-        }else{
+        if ($insereResultado) {
+          echo json_encode(array('retorno' => true, 'msg' => 'Exame finalizado com sucesso!'));
+        } else {
           echo json_encode(array('retorno' => false, 'msg' => 'Não foi possível finalizar o exame, existem dados faltando'));
         }
-      }else{
+      } else {
         echo json_encode(array('retorno' => false, 'msg' => 'Não foi possível finalizar o exame, existem dados faltando'));
       }
-    }else{
+    } else {
       echo json_encode(array('retorno' => false, 'msg' => 'Não foi possível finalizar o exame, existem dados faltando'));
     }
   }
